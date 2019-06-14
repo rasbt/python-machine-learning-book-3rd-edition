@@ -56,7 +56,7 @@ from sklearn.ensemble import AdaBoostClassifier
 #     - [Evaluating and tuning the ensemble classifier](#Evaluating-and-tuning-the-ensemble-classifier)
 # - [Bagging – building an ensemble of classifiers from bootstrap samples](#Bagging----Building-an-ensemble-of-classifiers-from-bootstrap-samples)
 #     - [Bagging in a nutshell](#Bagging-in-a-nutshell)
-#     - [Applying bagging to classify samples in the Wine dataset](#Applying-bagging-to-classify-samples-in-the-Wine-dataset)
+#     - [Applying bagging to classify examples in the Wine dataset](#Applying-bagging-to-classify-examples-in-the-Wine-dataset)
 # - [Leveraging weak learners via adaptive boosting](#Leveraging-weak-learners-via-adaptive-boosting)
 #     - [How boosting works](#How-boosting-works)
 #     - [Applying AdaBoost using scikit-learn](#Applying-AdaBoost-using-scikit-learn)
@@ -188,10 +188,10 @@ class MajorityVoteClassifier(BaseEstimator,
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Matrix of training samples.
+        X : {array-like, sparse matrix}, shape = [n_examples, n_features]
+            Matrix of training examples.
 
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_examples]
             Vector of target class labels.
 
         Returns
@@ -225,12 +225,12 @@ class MajorityVoteClassifier(BaseEstimator,
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Matrix of training samples.
+        X : {array-like, sparse matrix}, shape = [n_examples, n_features]
+            Matrix of training examples.
 
         Returns
         ----------
-        maj_vote : array-like, shape = [n_samples]
+        maj_vote : array-like, shape = [n_examples]
             Predicted class labels.
             
         """
@@ -256,14 +256,14 @@ class MajorityVoteClassifier(BaseEstimator,
 
         Parameters
         ----------
-        X : {array-like, sparse matrix}, shape = [n_samples, n_features]
-            Training vectors, where n_samples is the number of samples and
+        X : {array-like, sparse matrix}, shape = [n_examples, n_features]
+            Training vectors, where n_examples is the number of examples and
             n_features is the number of features.
 
         Returns
         ----------
-        avg_proba : array-like, shape = [n_samples, n_classes]
-            Weighted average probability for each class per sample.
+        avg_proba : array-like, shape = [n_examples, n_classes]
+            Weighted average probability for each class per example.
 
         """
         probas = np.asarray([clf.predict_proba(X)
@@ -547,7 +547,7 @@ mv_clf
 
 
 
-# ## Applying bagging to classify samples in the Wine dataset
+# ## Applying bagging to classify examples in the Wine dataset
 
 
 
