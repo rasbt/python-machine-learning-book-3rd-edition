@@ -17,11 +17,11 @@ from sklearn.datasets import make_moons
 from sklearn.datasets import make_circles
 from sklearn.decomposition import KernelPCA
 
-# *Python Machine Learning 2nd Edition* by [Sebastian Raschka](https://sebastianraschka.com), Packt Publishing Ltd. 2017
+# *Python Machine Learning 3rd Edition* by [Sebastian Raschka](https://sebastianraschka.com), Packt Publishing Ltd. 2019
 # 
-# Code Repository: https://github.com/rasbt/python-machine-learning-book-2nd-edition
+# Code Repository: https://github.com/rasbt/python-machine-learning-book-3rd-edition
 # 
-# Code License: [MIT License](https://github.com/rasbt/python-machine-learning-book-2nd-edition/blob/master/LICENSE.txt)
+# Code License: [MIT License](https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
 
 # # Python Machine Learning - Code Examples
 
@@ -328,7 +328,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
         plt.scatter(x=X[y == cl, 0], 
                     y=X[y == cl, 1],
                     alpha=0.6, 
-                    c=cmap(idx),
+                    color=cmap(idx),
                     edgecolor='black',
                     marker=markers[idx], 
                     label=cl)
@@ -343,7 +343,7 @@ pca = PCA(n_components=2)
 X_train_pca = pca.fit_transform(X_train_std)
 X_test_pca = pca.transform(X_test_std)
 
-lr = LogisticRegression()
+lr = LogisticRegression(multi_class='ovr', random_state=1, solver='lbfgs')
 lr = lr.fit(X_train_pca, y_train)
 
 
@@ -445,7 +445,7 @@ mean_overall = np.mean(X_train_std, axis=0)
 d = 13  # number of features
 S_B = np.zeros((d, d))
 for i, mean_vec in enumerate(mean_vecs):
-    n = X_train[y_train == i + 1, :].shape[0]
+    n = X_train_std[y_train == i + 1, :].shape[0]
     mean_vec = mean_vec.reshape(d, 1)  # make column vector
     mean_overall = mean_overall.reshape(d, 1)  # make column vector
     S_B += n * (mean_vec - mean_overall).dot((mean_vec - mean_overall).T)
@@ -548,7 +548,8 @@ X_train_lda = lda.fit_transform(X_train_std, y_train)
 
 
 
-lr = LogisticRegression()
+
+lr = LogisticRegression(multi_class='ovr', random_state=1, solver='lbfgs')
 lr = lr.fit(X_train_lda, y_train)
 
 plot_decision_regions(X_train_lda, y_train, classifier=lr)
@@ -627,8 +628,8 @@ def rbf_kernel_pca(X, gamma, n_components):
     eigvals, eigvecs = eigvals[::-1], eigvecs[:, ::-1]
 
     # Collect the top k eigenvectors (projected samples)
-    X_pc = np.column_stack((eigvecs[:, i]
-                            for i in range(n_components)))
+    X_pc = np.column_stack([eigvecs[:, i]
+                            for i in range(n_components)])
 
     return X_pc
 
@@ -682,15 +683,15 @@ plt.show()
 
 X_kpca = rbf_kernel_pca(X, gamma=15, n_components=2)
 
-fig, ax = plt.subplots(nrows=1,ncols=2, figsize=(7,3))
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(7, 3))
 ax[0].scatter(X_kpca[y==0, 0], X_kpca[y==0, 1], 
             color='red', marker='^', alpha=0.5)
 ax[0].scatter(X_kpca[y==1, 0], X_kpca[y==1, 1],
             color='blue', marker='o', alpha=0.5)
 
-ax[1].scatter(X_kpca[y==0, 0], np.zeros((50,1))+0.02, 
+ax[1].scatter(X_kpca[y==0, 0], np.zeros((50, 1))+0.02, 
             color='red', marker='^', alpha=0.5)
-ax[1].scatter(X_kpca[y==1, 0], np.zeros((50,1))-0.02,
+ax[1].scatter(X_kpca[y==1, 0], np.zeros((50, 1))-0.02,
             color='blue', marker='o', alpha=0.5)
 
 ax[0].set_xlabel('PC1')
@@ -824,8 +825,8 @@ def rbf_kernel_pca(X, gamma, n_components):
     eigvals, eigvecs = eigvals[::-1], eigvecs[:, ::-1]
 
     # Collect the top k eigenvectors (projected samples)
-    alphas = np.column_stack((eigvecs[:, i]
-                              for i in range(n_components)))
+    alphas = np.column_stack([eigvecs[:, i]
+                              for i in range(n_components)])
 
     # Collect the corresponding eigenvalues
     lambdas = [eigvals[i] for i in range(n_components)]
@@ -910,6 +911,11 @@ plt.show()
 # ---
 # 
 # Readers may ignore the next cell.
+
+
+
+
+
 
 
 
