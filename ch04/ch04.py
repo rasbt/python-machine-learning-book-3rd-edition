@@ -4,10 +4,11 @@
 import pandas as pd
 from io import StringIO
 import sys
-from sklearn.preprocessing import Imputer
+from sklearn.impute import SimpleImputer
 import numpy as np
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import StandardScaler
@@ -20,9 +21,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import SelectFromModel
 
-# *Python Machine Learning 2nd Edition* by [Sebastian Raschka](https://sebastianraschka.com), Packt Publishing Ltd. 2017
+# *Python Machine Learning 3rd Edition* by [Sebastian Raschka](https://sebastianraschka.com), Packt Publishing Ltd. 2019
 # 
-# Code Repository: https://github.com/rasbt/python-machine-learning-book-2nd-edition
+# Code Repository: https://github.com/rasbt/python-machine-learning-book-3rd-edition
 # 
 # Code License: [MIT License](https://github.com/rasbt/python-machine-learning-book-2nd-edition/blob/master/LICENSE.txt)
 
@@ -43,7 +44,7 @@ from sklearn.feature_selection import SelectFromModel
 
 # - [Dealing with missing data](#Dealing-with-missing-data)
 #   - [Identifying missing values in tabular data](#Identifying-missing-values-in-tabular-data)
-#   - [Eliminating samples or features with missing values](#Eliminating-samples-or-features-with-missing-values)
+#   - [Eliminating training examples or features with missing values](#Eliminating-training-examples-or-features-with-missing-values)
 #   - [Imputing missing values](#Imputing-missing-values)
 #   - [Understanding the scikit-learn estimator API](#Understanding-the-scikit-learn-estimator-API)
 # - [Handling categorical data](#Handling-categorical-data)
@@ -101,7 +102,7 @@ df.values
 
 
 
-# ## Eliminating samples or features with missing values
+# ## Eliminating training examples or features with missing values
 
 
 
@@ -159,7 +160,7 @@ df.values
 # impute missing values via the column mean
 
 
-imr = Imputer(missing_values='NaN', strategy='mean', axis=0)
+imr = SimpleImputer(missing_values=np.nan, strategy='mean')
 imr = imr.fit(df.values)
 imputed_data = imr.transform(df.values)
 imputed_data
@@ -253,15 +254,12 @@ y
 class_le.inverse_transform(y)
 
 
-# Note: The deprecation warning shown above is due to an implementation detail in scikit-learn. It was already addressed in a pull request (https://github.com/scikit-learn/scikit-learn/pull/9816), and the patch will be released with the next version of scikit-learn (i.e., v. 0.20.0).
-
 
 # ## Performing one-hot encoding on nominal features
 
 
 
 X = df[['color', 'size', 'price']].values
-
 color_le = LabelEncoder()
 X[:, 0] = color_le.fit_transform(X[:, 0])
 X
@@ -270,17 +268,18 @@ X
 
 
 
-ohe = OneHotEncoder(categorical_features=[0])
-ohe.fit_transform(X).toarray()
+X = df[['color', 'size', 'price']].values
+color_ohe = OneHotEncoder()
+color_ohe.fit_transform(X[:, 0].reshape(-1, 1)).toarray()
 
 
 
 
-# return dense array so that we can skip
-# the toarray step
 
-ohe = OneHotEncoder(categorical_features=[0], sparse=False)
-ohe.fit_transform(X)
+X = df[['color', 'size', 'price']].values
+c_transf = ColumnTransformer([ ('onehot', OneHotEncoder(), [0]),
+                               ('nothing', 'passthrough', [1, 2])])
+c_transf.fit_transform(X).astype(float)
 
 
 
@@ -301,8 +300,10 @@ pd.get_dummies(df[['price', 'color', 'size']], drop_first=True)
 
 # multicollinearity guard for the OneHotEncoder
 
-ohe = OneHotEncoder(categorical_features=[0])
-ohe.fit_transform(X).toarray()[:, 1:]
+color_ohe = OneHotEncoder(categories='auto', drop='first')
+c_transf = ColumnTransformer([ ('onehot', color_ohe, [0]),
+                               ('nothing', 'passthrough', [1, 2])])
+c_transf.fit_transform(X).astype(float)
 
 
 
@@ -404,7 +405,7 @@ print('normalized:', (ex - ex.min()) / (ex.max() - ex.min()))
 
 
 
-LogisticRegression(penalty='l1')
+LogisticRegression(penalty='l1', solver='liblinear', multi_class='ovr')
 
 
 # Applied to the standardized Wine data ...
@@ -412,7 +413,7 @@ LogisticRegression(penalty='l1')
 
 
 
-lr = LogisticRegression(penalty='l1', C=1.0)
+lr = LogisticRegression(penalty='l1', C=1.0, solver='liblinear', multi_class='ovr')
 # Note that C=1.0 is the default. You can increase
 # or decrease it to make the regulariztion effect
 # stronger or weaker, respectively.
@@ -454,7 +455,8 @@ colors = ['blue', 'green', 'red', 'cyan',
 
 weights, params = [], []
 for c in np.arange(-4., 6.):
-    lr = LogisticRegression(penalty='l1', C=10.**c, random_state=0)
+    lr = LogisticRegression(penalty='l1', C=10.**c, solver='liblinear', 
+                            multi_class='ovr', random_state=0)
     lr.fit(X_train_std, y_train)
     weights.append(lr.coef_[1])
     params.append(10**c)

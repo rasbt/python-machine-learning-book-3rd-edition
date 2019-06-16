@@ -204,7 +204,8 @@ print('CV accuracy: %.3f +/- %.3f' % (np.mean(scores), np.std(scores)))
 
 
 pipe_lr = make_pipeline(StandardScaler(),
-                        LogisticRegression(penalty='l2', random_state=1, solver='lbfgs'))
+                        LogisticRegression(penalty='l2', random_state=1,
+                                           solver='lbfgs', max_iter=10000))
 
 train_sizes, train_scores, test_scores =                learning_curve(estimator=pipe_lr,
                                X=X_train,
@@ -243,7 +244,7 @@ plt.ylabel('Accuracy')
 plt.legend(loc='lower right')
 plt.ylim([0.8, 1.03])
 plt.tight_layout()
-plt.savefig('images/06_05.png', dpi=300)
+#plt.savefig('images/06_05.png', dpi=300)
 plt.show()
 
 
