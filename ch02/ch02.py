@@ -107,10 +107,10 @@ class Perceptron(object):
 
         Parameters
         ----------
-        X : {array-like}, shape = [n_samples, n_features]
-          Training vectors, where n_samples is the number of samples and
+        X : {array-like}, shape = [n_examples, n_features]
+          Training vectors, where n_examples is the number of examples and
           n_features is the number of features.
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_examples]
           Target values.
 
         Returns
@@ -255,7 +255,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     plt.xlim(xx1.min(), xx1.max())
     plt.ylim(xx2.min(), xx2.max())
 
-    # plot class samples
+    # plot class examples
     for idx, cl in enumerate(np.unique(y)):
         plt.scatter(x=X[y == cl, 0], 
                     y=X[y == cl, 1],
@@ -330,10 +330,10 @@ class AdalineGD(object):
 
         Parameters
         ----------
-        X : {array-like}, shape = [n_samples, n_features]
-          Training vectors, where n_samples is the number of samples and
+        X : {array-like}, shape = [n_examples, n_features]
+          Training vectors, where n_examples is the number of examples and
           n_features is the number of features.
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_examples]
           Target values.
 
         Returns
@@ -417,10 +417,10 @@ X_std[:, 1] = (X[:, 1] - X[:, 1].mean()) / X[:, 1].std()
 
 
 
-ada = AdalineGD(n_iter=15, eta=0.01)
-ada.fit(X_std, y)
+ada_gd = AdalineGD(n_iter=15, eta=0.01)
+ada_gd.fit(X_std, y)
 
-plot_decision_regions(X_std, y, classifier=ada)
+plot_decision_regions(X_std, y, classifier=ada_gd)
 plt.title('Adaline - Gradient Descent')
 plt.xlabel('sepal length [standardized]')
 plt.ylabel('petal length [standardized]')
@@ -429,7 +429,7 @@ plt.tight_layout()
 # plt.savefig('images/02_14_1.png', dpi=300)
 plt.show()
 
-plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
+plt.plot(range(1, len(ada_gd.cost_) + 1), ada_gd.cost_, marker='o')
 plt.xlabel('Epochs')
 plt.ylabel('Sum-squared-error')
 
@@ -465,7 +465,7 @@ class AdalineSGD(object):
       Weights after fitting.
     cost_ : list
       Sum-of-squares cost function value averaged over all
-      training samples in each epoch.
+      training examples in each epoch.
 
         
     """
@@ -481,10 +481,10 @@ class AdalineSGD(object):
 
         Parameters
         ----------
-        X : {array-like}, shape = [n_samples, n_features]
-          Training vectors, where n_samples is the number of samples and
+        X : {array-like}, shape = [n_examples, n_features]
+          Training vectors, where n_examples is the number of examples and
           n_features is the number of features.
-        y : array-like, shape = [n_samples]
+        y : array-like, shape = [n_examples]
           Target values.
 
         Returns
@@ -550,10 +550,10 @@ class AdalineSGD(object):
 
 
 
-ada = AdalineSGD(n_iter=15, eta=0.01, random_state=1)
-ada.fit(X_std, y)
+ada_sgd = AdalineSGD(n_iter=15, eta=0.01, random_state=1)
+ada_sgd.fit(X_std, y)
 
-plot_decision_regions(X_std, y, classifier=ada)
+plot_decision_regions(X_std, y, classifier=ada_sgd)
 plt.title('Adaline - Stochastic Gradient Descent')
 plt.xlabel('sepal length [standardized]')
 plt.ylabel('petal length [standardized]')
@@ -563,7 +563,7 @@ plt.tight_layout()
 # plt.savefig('images/02_15_1.png', dpi=300)
 plt.show()
 
-plt.plot(range(1, len(ada.cost_) + 1), ada.cost_, marker='o')
+plt.plot(range(1, len(ada_sgd.cost_) + 1), ada_sgd.cost_, marker='o')
 plt.xlabel('Epochs')
 plt.ylabel('Average Cost')
 
@@ -574,7 +574,7 @@ plt.show()
 
 
 
-ada.partial_fit(X_std[0, :], y[0])
+ada_sgd.partial_fit(X_std[0, :], y[0])
 
 
 
