@@ -505,10 +505,12 @@ y_quad_fit = pr.predict(quadratic.fit_transform(X_fit))
 plt.scatter(X, y, label='training points')
 plt.plot(X_fit, y_lin_fit, label='linear fit', linestyle='--')
 plt.plot(X_fit, y_quad_fit, label='quadratic fit')
+plt.xlabel('Explanatory variable')
+plt.ylabel('Predicted or known target values')
 plt.legend(loc='upper left')
 
 plt.tight_layout()
-#plt.savefig('images/10_10.png', dpi=300)
+plt.savefig('images/10_10.png', dpi=300)
 plt.show()
 
 
