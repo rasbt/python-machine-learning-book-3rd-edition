@@ -33,7 +33,15 @@ from sklearn.decomposition import KernelPCA
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 
 # ### Overview
@@ -49,7 +57,7 @@ from sklearn.decomposition import KernelPCA
 #   - [The inner workings of linear discriminant analysis](#The-inner-workings-of-linear-discriminant-analysis)
 #   - [Computing the scatter matrices](#Computing-the-scatter-matrices)
 #   - [Selecting linear discriminants for the new feature subspace](#Selecting-linear-discriminants-for-the-new-feature-subspace)
-#   - [Projecting samples onto the new feature space](#Projecting-samples-onto-the-new-feature-space)
+#   - [Projecting examples onto the new feature space](#Projecting-examples-onto-the-new-feature-space)
 #   - [LDA via scikit-learn](#LDA-via-scikit-learn)
 # - [Using kernel principal component analysis for nonlinear mappings](#Using-kernel-principal-component-analysis-for-nonlinear-mappings)
 #   - [Kernel functions and the kernel trick](#Kernel-functions-and-the-kernel-trick)
@@ -128,7 +136,7 @@ X_test_std = sc.transform(X_test)
 # 
 # My initial typo reflects a common mistake is that some people are *not* re-using these parameters from the model training/building and standardize the new data "from scratch." Here's simple example to explain why this is a problem.
 # 
-# Let's assume we have a simple training set consisting of 3 samples with 1 feature (let's call this feature "length"):
+# Let's assume we have a simple training set consisting of 3 examples with 1 feature (let's call this feature "length"):
 # 
 # - train_1: 10 cm -> class_2
 # - train_2: 20 cm -> class_2
@@ -142,13 +150,13 @@ X_test_std = sc.transform(X_test)
 # - train_std_2: 0 -> class_2
 # - train_std_3: 1.21 -> class_1
 # 
-# Next, let's assume our model has learned to classify samples with a standardized length value < 0.6 as class_2 (class_1 otherwise). So far so good. Now, let's say we have 3 unlabeled data points that we want to classify:
+# Next, let's assume our model has learned to classify examples with a standardized length value < 0.6 as class_2 (class_1 otherwise). So far so good. Now, let's say we have 3 unlabeled data points that we want to classify:
 # 
 # - new_4: 5 cm -> class ?
 # - new_5: 6 cm -> class ?
 # - new_6: 7 cm -> class ?
 # 
-# If we look at the "unstandardized "length" values in our training datast, it is intuitive to say that all of these samples are likely belonging to class_2. However, if we standardize these by re-computing standard deviation and and mean you would get similar values as before in the training set and your classifier would (probably incorrectly) classify samples 4 and 5 as class 2.
+# If we look at the "unstandardized "length" values in our training datast, it is intuitive to say that all of these examples are likely belonging to class_2. However, if we standardize these by re-computing standard deviation and and mean you would get similar values as before in the training set and your classifier would (probably incorrectly) classify examples 4 and 5 as class 2.
 # 
 # - new_std_4: -1.21 -> class 2
 # - new_std_5: 0 -> class 2
@@ -156,11 +164,11 @@ X_test_std = sc.transform(X_test)
 # 
 # However, if we use the parameters from your "training set standardization," we'd get the values:
 # 
-# - sample5: -18.37 -> class 2
-# - sample6: -17.15 -> class 2
-# - sample7: -15.92 -> class 2
+# - example5: -18.37 -> class 2
+# - example6: -17.15 -> class 2
+# - example7: -15.92 -> class 2
 # 
-# The values 5 cm, 6 cm, and 7 cm are much lower than anything we have seen in the training set previously. Thus, it only makes sense that the standardized features of the "new samples" are much lower than every standardized feature in the training set.
+# The values 5 cm, 6 cm, and 7 cm are much lower than anything we have seen in the training set previously. Thus, it only makes sense that the standardized features of the "new examples" are much lower than every standardized feature in the training set.
 # 
 # ---
 
@@ -196,9 +204,9 @@ cum_var_exp = np.cumsum(var_exp)
 
 
 plt.bar(range(1, 14), var_exp, alpha=0.5, align='center',
-        label='individual explained variance')
+        label='Individual explained variance')
 plt.step(range(1, 14), cum_var_exp, where='mid',
-         label='cumulative explained variance')
+         label='Cumulative explained variance')
 plt.ylabel('Explained variance ratio')
 plt.xlabel('Principal component index')
 plt.legend(loc='best')
@@ -323,7 +331,7 @@ def plot_decision_regions(X, y, classifier, resolution=0.02):
     plt.xlim(xx1.min(), xx1.max())
     plt.ylim(xx2.min(), xx2.max())
 
-    # plot class samples
+    # plot examples by class
     for idx, cl in enumerate(np.unique(y)):
         plt.scatter(x=X[y == cl, 0], 
                     y=X[y == cl, 1],
@@ -495,11 +503,11 @@ discr = [(i / tot) for i in sorted(eigen_vals.real, reverse=True)]
 cum_discr = np.cumsum(discr)
 
 plt.bar(range(1, 14), discr, alpha=0.5, align='center',
-        label='individual "discriminability"')
+        label='Individual "discriminability"')
 plt.step(range(1, 14), cum_discr, where='mid',
-         label='cumulative "discriminability"')
-plt.ylabel('"discriminability" ratio')
-plt.xlabel('Linear Discriminants')
+         label='Cumulative "discriminability"')
+plt.ylabel('"Discriminability" ratio')
+plt.xlabel('Linear discriminants')
 plt.ylim([-0.1, 1.1])
 plt.legend(loc='best')
 plt.tight_layout()
@@ -515,7 +523,7 @@ print('Matrix W:\n', w)
 
 
 
-# ## Projecting samples onto the new feature space
+# ## Projecting examples onto the new feature space
 
 
 
@@ -593,7 +601,7 @@ def rbf_kernel_pca(X, gamma, n_components):
 
     Parameters
     ------------
-    X: {NumPy ndarray}, shape = [n_samples, n_features]
+    X: {NumPy ndarray}, shape = [n_examples, n_features]
         
     gamma: float
       Tuning parameter of the RBF kernel
@@ -603,7 +611,7 @@ def rbf_kernel_pca(X, gamma, n_components):
 
     Returns
     ------------
-     X_pc: {NumPy ndarray}, shape = [n_samples, k_features]
+     X_pc: {NumPy ndarray}, shape = [n_examples, k_features]
        Projected dataset   
 
     """
@@ -627,7 +635,7 @@ def rbf_kernel_pca(X, gamma, n_components):
     eigvals, eigvecs = eigh(K)
     eigvals, eigvecs = eigvals[::-1], eigvecs[:, ::-1]
 
-    # Collect the top k eigenvectors (projected samples)
+    # Collect the top k eigenvectors (projected examples)
     X_pc = np.column_stack([eigvecs[:, i]
                             for i in range(n_components)])
 
@@ -787,7 +795,7 @@ def rbf_kernel_pca(X, gamma, n_components):
 
     Parameters
     ------------
-    X: {NumPy ndarray}, shape = [n_samples, n_features]
+    X: {NumPy ndarray}, shape = [n_examples, n_features]
         
     gamma: float
       Tuning parameter of the RBF kernel
@@ -797,7 +805,7 @@ def rbf_kernel_pca(X, gamma, n_components):
 
     Returns
     ------------
-     alphas: {NumPy ndarray}, shape = [n_samples, k_features]
+     alphas: {NumPy ndarray}, shape = [n_examples, k_features]
        Projected dataset 
      
      lambdas: list
@@ -824,7 +832,7 @@ def rbf_kernel_pca(X, gamma, n_components):
     eigvals, eigvecs = eigh(K)
     eigvals, eigvecs = eigvals[::-1], eigvecs[:, ::-1]
 
-    # Collect the top k eigenvectors (projected samples)
+    # Collect the top k eigenvectors (projected examples)
     alphas = np.column_stack([eigvecs[:, i]
                               for i in range(n_components)])
 
@@ -871,9 +879,10 @@ plt.scatter(alphas[y == 0, 0], np.zeros((50)),
 plt.scatter(alphas[y == 1, 0], np.zeros((50)),
             color='blue', marker='o', alpha=0.5)
 plt.scatter(x_proj, 0, color='black',
-            label='original projection of point X[25]', marker='^', s=100)
+            label='Original projection of point X[25]', marker='^', s=100)
 plt.scatter(x_reproj, 0, color='green',
-            label='remapped point X[25]', marker='x', s=500)
+            label='Remapped point X[25]', marker='x', s=500)
+plt.yticks([], [])
 plt.legend(scatterpoints=1)
 
 plt.tight_layout()
