@@ -40,7 +40,15 @@ from sklearn.utils import resample
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 
 # ### Overview
@@ -221,7 +229,7 @@ test_std = np.std(test_scores, axis=1)
 
 plt.plot(train_sizes, train_mean,
          color='blue', marker='o',
-         markersize=5, label='training accuracy')
+         markersize=5, label='Training accuracy')
 
 plt.fill_between(train_sizes,
                  train_mean + train_std,
@@ -231,7 +239,7 @@ plt.fill_between(train_sizes,
 plt.plot(train_sizes, test_mean,
          color='green', linestyle='--',
          marker='s', markersize=5,
-         label='validation accuracy')
+         label='Validation accuracy')
 
 plt.fill_between(train_sizes,
                  test_mean + test_std,
@@ -244,7 +252,7 @@ plt.ylabel('Accuracy')
 plt.legend(loc='lower right')
 plt.ylim([0.8, 1.03])
 plt.tight_layout()
-#plt.savefig('images/06_05.png', dpi=300)
+# plt.savefig('images/06_05.png', dpi=300)
 plt.show()
 
 
@@ -271,7 +279,7 @@ test_std = np.std(test_scores, axis=1)
 
 plt.plot(param_range, train_mean, 
          color='blue', marker='o', 
-         markersize=5, label='training accuracy')
+         markersize=5, label='Training accuracy')
 
 plt.fill_between(param_range, train_mean + train_std,
                  train_mean - train_std, alpha=0.15,
@@ -280,7 +288,7 @@ plt.fill_between(param_range, train_mean + train_std,
 plt.plot(param_range, test_mean, 
          color='green', linestyle='--', 
          marker='s', markersize=5, 
-         label='validation accuracy')
+         label='Validation accuracy')
 
 plt.fill_between(param_range, 
                  test_mean + test_std,
@@ -518,23 +526,23 @@ plt.plot([0, 1],
          [0, 1],
          linestyle='--',
          color=(0.6, 0.6, 0.6),
-         label='random guessing')
+         label='Random guessing')
 
 mean_tpr /= len(cv)
 mean_tpr[-1] = 1.0
 mean_auc = auc(mean_fpr, mean_tpr)
 plt.plot(mean_fpr, mean_tpr, 'k--',
-         label='mean ROC (area = %0.2f)' % mean_auc, lw=2)
+         label='Mean ROC (area = %0.2f)' % mean_auc, lw=2)
 plt.plot([0, 0, 1],
          [0, 1, 1],
          linestyle=':',
          color='black',
-         label='perfect performance')
+         label='Perfect performance')
 
 plt.xlim([-0.05, 1.05])
 plt.ylim([-0.05, 1.05])
-plt.xlabel('false positive rate')
-plt.ylabel('true positive rate')
+plt.xlabel('False positive rate')
+plt.ylabel('True positive rate')
 plt.legend(loc="lower right")
 
 plt.tight_layout()
