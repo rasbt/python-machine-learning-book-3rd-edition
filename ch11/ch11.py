@@ -32,7 +32,15 @@ from sklearn.cluster import DBSCAN
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 
 # ### Overview
@@ -101,22 +109,22 @@ plt.scatter(X[y_km == 0, 0],
             X[y_km == 0, 1],
             s=50, c='lightgreen',
             marker='s', edgecolor='black',
-            label='cluster 1')
+            label='Cluster 1')
 plt.scatter(X[y_km == 1, 0],
             X[y_km == 1, 1],
             s=50, c='orange',
             marker='o', edgecolor='black',
-            label='cluster 2')
+            label='Cluster 2')
 plt.scatter(X[y_km == 2, 0],
             X[y_km == 2, 1],
             s=50, c='lightblue',
             marker='v', edgecolor='black',
-            label='cluster 3')
+            label='Cluster 3')
 plt.scatter(km.cluster_centers_[:, 0],
             km.cluster_centers_[:, 1],
             s=250, marker='*',
             c='red', edgecolor='black',
-            label='centroids')
+            label='Centroids')
 plt.legend(scatterpoints=1)
 plt.grid()
 plt.tight_layout()
@@ -219,17 +227,17 @@ plt.scatter(X[y_km == 0, 0],
             c='lightgreen',
             edgecolor='black',
             marker='s',
-            label='cluster 1')
+            label='Cluster 1')
 plt.scatter(X[y_km == 1, 0],
             X[y_km == 1, 1],
             s=50,
             c='orange',
             edgecolor='black',
             marker='o',
-            label='cluster 2')
+            label='Cluster 2')
 
 plt.scatter(km.cluster_centers_[:, 0], km.cluster_centers_[:, 1],
-            s=250, marker='*', c='red', label='centroids')
+            s=250, marker='*', c='red', label='Centroids')
 plt.legend()
 plt.grid()
 plt.tight_layout()
@@ -330,7 +338,7 @@ pd.DataFrame(row_clusters,
 
 
 
-# 3. correct approach: Input sample matrix
+# 3. correct approach: Input matrix
 
 row_clusters = linkage(df.values, method='complete', metric='euclidean')
 pd.DataFrame(row_clusters,
@@ -452,15 +460,15 @@ ac = AgglomerativeClustering(n_clusters=2,
 y_ac = ac.fit_predict(X)
 ax2.scatter(X[y_ac == 0, 0], X[y_ac == 0, 1], c='lightblue',
             edgecolor='black',
-            marker='o', s=40, label='cluster 1')
+            marker='o', s=40, label='Cluster 1')
 ax2.scatter(X[y_ac == 1, 0], X[y_ac == 1, 1], c='red',
             edgecolor='black',
-            marker='s', s=40, label='cluster 2')
+            marker='s', s=40, label='Cluster 2')
 ax2.set_title('Agglomerative clustering')
 
 plt.legend()
 plt.tight_layout()
-# plt.savefig('images/11_15.png', dpi=300)
+#plt.savefig('images/11_15.png', dpi=300)
 plt.show()
 
 
@@ -474,11 +482,11 @@ y_db = db.fit_predict(X)
 plt.scatter(X[y_db == 0, 0], X[y_db == 0, 1],
             c='lightblue', marker='o', s=40,
             edgecolor='black', 
-            label='cluster 1')
+            label='Cluster 1')
 plt.scatter(X[y_db == 1, 0], X[y_db == 1, 1],
             c='red', marker='s', s=40,
             edgecolor='black', 
-            label='cluster 2')
+            label='Cluster 2')
 plt.legend()
 plt.tight_layout()
 #plt.savefig('images/11_16.png', dpi=300)

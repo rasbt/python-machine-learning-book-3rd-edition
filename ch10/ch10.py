@@ -502,15 +502,15 @@ pr.fit(X_quad, y)
 y_quad_fit = pr.predict(quadratic.fit_transform(X_fit))
 
 # plot results
-plt.scatter(X, y, label='training points')
-plt.plot(X_fit, y_lin_fit, label='linear fit', linestyle='--')
-plt.plot(X_fit, y_quad_fit, label='quadratic fit')
+plt.scatter(X, y, label='Training points')
+plt.plot(X_fit, y_lin_fit, label='Linear fit', linestyle='--')
+plt.plot(X_fit, y_quad_fit, label='Quadratic fit')
 plt.xlabel('Explanatory variable')
 plt.ylabel('Predicted or known target values')
 plt.legend(loc='upper left')
 
 plt.tight_layout()
-plt.savefig('images/10_10.png', dpi=300)
+#plt.savefig('images/10_11.png', dpi=300)
 plt.show()
 
 
@@ -563,22 +563,22 @@ cubic_r2 = r2_score(y, regr.predict(X_cubic))
 
 
 # plot results
-plt.scatter(X, y, label='training points', color='lightgray')
+plt.scatter(X, y, label='Training points', color='lightgray')
 
 plt.plot(X_fit, y_lin_fit, 
-         label='linear (d=1), $R^2=%.2f$' % linear_r2, 
+         label='Linear (d=1), $R^2=%.2f$' % linear_r2, 
          color='blue', 
          lw=2, 
          linestyle=':')
 
 plt.plot(X_fit, y_quad_fit, 
-         label='quadratic (d=2), $R^2=%.2f$' % quadratic_r2,
+         label='Quadratic (d=2), $R^2=%.2f$' % quadratic_r2,
          color='red', 
          lw=2,
          linestyle='-')
 
 plt.plot(X_fit, y_cubic_fit, 
-         label='cubic (d=3), $R^2=%.2f$' % cubic_r2,
+         label='Cubic (d=3), $R^2=%.2f$' % cubic_r2,
          color='green', 
          lw=2, 
          linestyle='--')
@@ -587,7 +587,7 @@ plt.xlabel('% lower status of the population [LSTAT]')
 plt.ylabel('Price in $1000s [MEDV]')
 plt.legend(loc='upper right')
 
-#plt.savefig('images/10_11.png', dpi=300)
+#plt.savefig('images/10_12.png', dpi=300)
 plt.show()
 
 
@@ -610,10 +610,10 @@ y_lin_fit = regr.predict(X_fit)
 linear_r2 = r2_score(y_sqrt, regr.predict(X_log))
 
 # plot results
-plt.scatter(X_log, y_sqrt, label='training points', color='lightgray')
+plt.scatter(X_log, y_sqrt, label='Training points', color='lightgray')
 
 plt.plot(X_fit, y_lin_fit, 
-         label='linear (d=1), $R^2=%.2f$' % linear_r2, 
+         label='Linear (d=1), $R^2=%.2f$' % linear_r2, 
          color='blue', 
          lw=2)
 
@@ -622,7 +622,7 @@ plt.ylabel('$\sqrt{Price \; in \; \$1000s \; [MEDV]}$')
 plt.legend(loc='lower left')
 
 plt.tight_layout()
-#plt.savefig('images/10_12.png', dpi=300)
+#plt.savefig('images/10_13.png', dpi=300)
 plt.show()
 
 
@@ -647,7 +647,7 @@ sort_idx = X.flatten().argsort()
 lin_regplot(X[sort_idx], y[sort_idx], tree)
 plt.xlabel('% lower status of the population [LSTAT]')
 plt.ylabel('Price in $1000s [MEDV]')
-#plt.savefig('images/10_13.png', dpi=300)
+#plt.savefig('images/10_14.png', dpi=300)
 plt.show()
 
 
@@ -691,7 +691,7 @@ plt.scatter(y_train_pred,
             marker='o', 
             s=35,
             alpha=0.9,
-            label='training data')
+            label='Training data')
 plt.scatter(y_test_pred,  
             y_test_pred - y_test, 
             c='limegreen',
@@ -699,7 +699,7 @@ plt.scatter(y_test_pred,
             marker='s', 
             s=35,
             alpha=0.9,
-            label='test data')
+            label='Test data')
 
 plt.xlabel('Predicted values')
 plt.ylabel('Residuals')
@@ -708,7 +708,7 @@ plt.hlines(y=0, xmin=-10, xmax=50, lw=2, color='black')
 plt.xlim([-10, 50])
 plt.tight_layout()
 
-# plt.savefig('images/10_14.png', dpi=300)
+#plt.savefig('images/10_15.png', dpi=300)
 plt.show()
 
 
