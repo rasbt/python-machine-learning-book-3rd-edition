@@ -1,3 +1,10 @@
+# Ch12 data files
+ch12/mnist_scaled.npz
+ch12/t10k-images-idx3-ubyte.gz
+ch12/t10k-labels-idx1-ubyte.gz
+ch12/train-images-idx3-ubyte.gz
+ch12/train-labels-idx1-ubyte.gz
+
 *checkpoint
 *tfevents*
 *.data-00000-of-00001
