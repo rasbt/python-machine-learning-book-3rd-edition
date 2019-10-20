@@ -1,6 +1,8 @@
 # coding: utf-8
 
 
+from sklearn.datasets import fetch_openml
+from sklearn.model_selection import train_test_split
 import sys
 import gzip
 import shutil
@@ -77,12 +79,27 @@ import matplotlib.pyplot as plt
 
 
 
+# To use the scikit-learn API for loading MNIST, please uncomment the follwing code below.
+
+
+
+"""
+
+
+X, y = fetch_openml('mnist_784', version=1, return_X_y=True)
+y = y.astype(int)
+X = ((X / 255.) - .5) * 2
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=10000, random_state=123, stratify=y)
+"""
+
+
 
 # # Classifying handwritten digits
 
 # ...
 
-# ## Obtaining the MNIST dataset
+# ## Obtaining and preparing the MNIST dataset
 
 # The MNIST dataset is publicly available at http://yann.lecun.com/exdb/mnist/ and consists of the following four parts:
 # 
@@ -554,9 +571,9 @@ plt.show()
 
 
 plt.plot(range(nn.epochs), nn.eval_['train_acc'], 
-         label='training')
+         label='Training')
 plt.plot(range(nn.epochs), nn.eval_['valid_acc'], 
-         label='validation', linestyle='--')
+         label='Validation', linestyle='--')
 plt.ylabel('Accuracy')
 plt.xlabel('Epochs')
 plt.legend()
