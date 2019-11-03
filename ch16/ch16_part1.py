@@ -5,6 +5,9 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 import numpy as np
 import pandas as pd
+import os
+import gzip
+import shutil
 from collections import Counter
 from tensorflow.keras.layers import Embedding
 from tensorflow.keras import Sequential
@@ -20,9 +23,13 @@ from tensorflow.keras.layers import Bidirectional
 # 
 # Code License: [MIT License](https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
 
-# Chapter 16: Modeling Sequential Data Using Recurrent Neural Networks (part 1/2)
-# ========
-# 
+# # Chapter 16: Modeling Sequential Data Using Recurrent Neural Networks (Part 1/2)
+
+# Note that the optional watermark extension is a small IPython notebook plugin that I developed to make the code reproducible. You can just skip the following line(s).
+
+
+
+
 
 # # Introducing sequential data
 # 
@@ -52,9 +59,9 @@ rnn_layer.build(input_shape=(None, None, 5))
 
 w_xh, w_oo, b_h = rnn_layer.weights
 
-print('W_xh shape: ', w_xh.shape)
-print('W_oo shape: ', w_oo.shape)
-print('b_h shape:  ', b_h.shape)
+print('W_xh shape:', w_xh.shape)
+print('W_oo shape:', w_oo.shape)
+print('b_h shape:', b_h.shape)
 
 
 
@@ -72,10 +79,10 @@ out_man = []
 for t in range(len(x_seq)):
     xt = tf.reshape(x_seq[t], (1, 5))
     print('Time step {} =>'.format(t))
-    print('   Input           : ', xt.numpy())
+    print('   Input           :', xt.numpy())
     
     ht = tf.matmul(xt, w_xh) + b_h    
-    print('   Hidden          : ', ht.numpy())
+    print('   Hidden          :', ht.numpy())
     
     if t>0:
         prev_o = out_man[t-1]
@@ -85,8 +92,8 @@ for t in range(len(x_seq)):
     ot = ht + tf.matmul(prev_o, w_oo)
     ot = tf.math.tanh(ot)
     out_man.append(ot)
-    print('   Output (manual) : ', ot.numpy())
-    print('   SimpleRNN output: '.format(t), output[0][t].numpy())
+    print('   Output (manual) :', ot.numpy())
+    print('   SimpleRNN output:'.format(t), output[0][t].numpy())
     print()
 
 
@@ -104,6 +111,14 @@ for t in range(len(x_seq)):
 
 
 
+
+
+
+
+
+
+with gzip.open('../ch08/movie_data.csv.gz', 'rb') as f_in, open('movie_data.csv', 'wb') as f_out:
+    shutil.copyfileobj(f_in, f_out)
 
 
 
@@ -160,7 +175,7 @@ for example in ds_raw_train:
     tokens = tokenizer.tokenize(example[0].numpy()[0])
     token_counts.update(tokens)
     
-print('Vocab-size: ', len(token_counts))
+print('Vocab-size:', len(token_counts))
 
 
 
@@ -175,8 +190,8 @@ encoder.encode(example_str)
 
 
 
-
 ## Step 3-A: define the function for transformation
+
 def encode(text_tensor, label):
     text = text_tensor.numpy()[0]
     encoded_text = encoder.encode(text)
@@ -196,54 +211,41 @@ ds_test = ds_raw_test.map(encode_map_fn)
 
 tf.random.set_seed(1)
 for example in ds_train.shuffle(1000).take(5):
-    print('Sequence length: ', example[0].shape)
+    print('Sequence length:', example[0].shape)
     
 example
 
 
 #  * **batch() vs. padded_batch()**
 
-
-
-#   ######   ###       ###          #      ###     
-#   #        #   #     #   #      #   #    #   #    
-#   #        #    #    #    #    #     #   #    #  
-#   #####    #####     #####     #     #   #####   
-#   #        #    #    #    #     #   #    #    #  
-#   #        #    #    #    #      # #     #    #   
-#   ######   #     #   #     #             #     # 
-#
-# this will result in error
-BATCH_SIZE = 32
-train_data = all_encoded_data.batch(BATCH_SIZE)
-
-next(iter(train_data))
-
-# Running this will result in error
-# We cannot apply .batch() to this dataset
-
-#   ######   ###       ###          #      ###     
-#   #        #   #     #   #      #   #    #   #    
-#   #        #    #    #    #    #     #   #    #  
-#   #####    #####     #####     #     #   #####   
-#   #        #    #    #    #     #   #    #    #  
-#   #        #    #    #    #      # #     #    #   
-#   ######   #     #   #     #             #     # 
-
+# ```python
+# 
+# # this will result in error
+# 
+# 
+# BATCH_SIZE = 32
+# train_data = all_encoded_data.batch(BATCH_SIZE)
+# 
+# next(iter(train_data))
+# 
+# # Running this will result in error
+# # We cannot apply .batch() to this dataset
+# ```
 
 
 
 ## Take a small subset
+
 ds_subset = ds_train.take(8)
 for example in ds_subset:
-    print('Individual Shape: ', example[0].shape)
+    print('Individual Shape:', example[0].shape)
 
 ## batching the datasets
 ds_batched = ds_subset.padded_batch(
     4, padded_shapes=([-1], []))
 
 for batch in ds_batched:
-    print('Batch Shape: ', batch[0].shape)
+    print('Batch Shape:', batch[0].shape)
 
 
 
@@ -274,6 +276,7 @@ test_data = ds_test.padded_batch(
 #  the embedding layer convert each interger into float vector of size `[output_dim]`
 #    * If input shape is `[BATCH_SIZE]`, output shape will be `[BATCH_SIZE, output_dim]`
 #    * If input shape is `[BATCH_SIZE, 10]`, output shape will be `[BATCH_SIZE, 10, output_dim]`
+
 
 
 
@@ -309,6 +312,7 @@ model.summary()
 ## An example of building a RNN model
 ## with SimpleRNN layer
 
+
 model = Sequential()
 model.add(Embedding(1000, 32))
 model.add(SimpleRNN(32, return_sequences=True))
@@ -321,6 +325,9 @@ model.summary()
 
 ## An example of building a RNN model
 ## with LSTM layer
+
+
+
 
 model = Sequential()
 model.add(Embedding(10000, 32))
@@ -344,7 +351,6 @@ model.summary()
 
 
 # ### Building an RNN model for the sentiment analysis task
-
 
 
 
@@ -389,11 +395,14 @@ print('Test Acc.: {:.2f}%'.format(test_results[1]*100))
 
 
 
+if not os.path.exists('models'):
+    os.mkdir('models')
+
+
 bi_lstm_model.save('models/Bidir-LSTM-full-length-seq.h5')
 
 
 #  * **Trying SimpleRNN with short sequences**
-
 
 
 
@@ -415,7 +424,7 @@ def preprocess_datasets(
             tokens = tokens[-max_seq_length:]
         token_counts.update(tokens)
 
-    print('Vocab-size: ', len(token_counts))
+    print('Vocab-size:', len(token_counts))
 
 
     ## Step 3: encoding the texts
@@ -447,8 +456,6 @@ def preprocess_datasets(
 
     return (train_data, valid_data, 
             test_data, len(token_counts))
-
-
 
 
 
@@ -505,6 +512,7 @@ def build_rnn_model(embedding_dim, vocab_size,
 
 
 
+
 batch_size = 32
 embedding_dim = 20
 max_seq_length = 100
@@ -543,7 +551,7 @@ history = rnn_model.fit(
 
 
 
-rnn_model.evaluate(test_data)
+results = rnn_model.evaluate(test_data)
 
 
 
@@ -554,7 +562,6 @@ print('Test Acc.: {:.2f}%'.format(results[1]*100))
 # ## Optional exercise: 
 # 
 # ### Uni-directional SimpleRNN with full-length sequences
-
 
 
 
@@ -593,18 +600,10 @@ history = rnn_model.fit(
     epochs=10)
 
 
-
-
-
-
-
-# 
-
 # # Appendix
 # 
 
-# ### A- An alterntaive way to get the dataset: using tensorflow_datasets
-
+# ### A -- An alterntaive way to get the dataset: using tensorflow_datasets
 
 
 
@@ -618,7 +617,13 @@ datasets = imdb_bldr.as_dataset(shuffle_files=False)
 datasets.keys()
 
 
-# ### B- Tokenizer and Encoder
+
+
+imdb_train = datasets['train']
+imdb_train = datasets['test']
+
+
+# ### B -- Tokenizer and Encoder
 # 
 #  * `tfds.features.text.Tokenizer`: https://www.tensorflow.org/datasets/api_docs/python/tfds/features/text/Tokenizer
 #  * `tfds.features.text.TokenTextEncoder`: https://www.tensorflow.org/datasets/api_docs/python/tfds/features/text/TokenTextEncoder
@@ -636,7 +641,7 @@ print(encoder.encode(b'a b c d, , : .'))
 print(encoder.encode(b'a b c d e f g h i z'))
 
 
-# ### C- Text Pre-processing with Keras 
+# ### C -- Text Pre-processing with Keras 
 
 
 
@@ -654,7 +659,6 @@ tf.keras.preprocessing.sequence.pad_sequences(sequences, maxlen=MAX_LEN)
 
 
 
-####
 TOP_K = 20000
 MAX_LEN = 500
 
@@ -677,9 +681,10 @@ x_train_padded = tf.keras.preprocessing.sequence.pad_sequences(
 print(x_train_padded.shape)
 
 
-# ### D- Embedding
+# ### D -- Embedding
 # 
 # 
+
 
 
 
@@ -694,6 +699,13 @@ tf.print(embed(inp_arr).shape)
 tf.print(embed(np.array([1])))
 
 
+# 
+# ---
+
+# 
+# 
+# Readers may ignore the next cell.
+# 
 
 
 

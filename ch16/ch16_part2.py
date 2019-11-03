@@ -15,9 +15,16 @@ import tensorflow as tf
 # 
 # 
 
+# Note that the optional watermark extension is a small IPython notebook plugin that I developed to make the code reproducible. You can just skip the following line(s).
+
+
+
+
+
 # ## Project two: character-level language modeling in TensorFlow
 # 
 # ### Preprocessing the dataset
+
 
 
 
@@ -36,8 +43,8 @@ print(start_indx, end_indx)
 
 text = text[start_indx:end_indx]
 char_set = set(text)
-print('Total Length: ', len(text))
-print('Unique Characters: ', len(char_set))
+print('Total Length:', len(text))
+print('Unique Characters:', len(char_set))
 
 
 
@@ -52,8 +59,9 @@ text_encoded = np.array(
 
 print('Text encoded shape: ', text_encoded.shape)
 
-print(text[:15], '  == Encoding ==> ', text_encoded[:15])
-print(text_encoded[15:21], '  == Reverse ==> ', ''.join(char_array[text_encoded[15:21]]))
+print(text[:15], '     == Encoding ==> ', text_encoded[:15])
+print(text_encoded[15:21], ' == Reverse  ==> ', ''.join(char_array[text_encoded[15:21]]))
+
 
 
 
@@ -93,8 +101,8 @@ ds_sequences = ds_chunks.map(split_input_target)
 
 ## inspection:
 for example in ds_sequences.take(2):
-    print(' Input (x): ', repr(''.join(char_array[example[0].numpy()])))
-    print('Target (y): ', repr(''.join(char_array[example[1].numpy()])))
+    print(' Input (x):', repr(''.join(char_array[example[0].numpy()])))
+    print('Target (y):', repr(''.join(char_array[example[1].numpy()])))
     print()
 
 
@@ -156,7 +164,7 @@ model.fit(ds, epochs=20)
 tf.random.set_seed(1)
 
 logits = [[1.0, 1.0, 1.0]]
-print('Probabilities: ', tf.math.softmax(logits).numpy()[0])
+print('Probabilities:', tf.math.softmax(logits).numpy()[0])
 
 samples = tf.random.categorical(
     logits=logits, num_samples=10)
@@ -168,7 +176,7 @@ tf.print(samples.numpy())
 tf.random.set_seed(1)
 
 logits = [[1.0, 1.0, 3.0]]
-print('Probabilities: ', tf.math.softmax(logits).numpy()[0])
+print('Probabilities:', tf.math.softmax(logits).numpy()[0])
 
 samples = tf.random.categorical(
     logits=logits, num_samples=10)
@@ -208,7 +216,7 @@ def sample(model, starting_str,
     return generated_str
 
 tf.random.set_seed(1)
-print(sample(model, starting_str="The island", 
+print(sample(model, starting_str='The island', 
              scale_factor=1.0))
 
 
@@ -228,14 +236,14 @@ print('Probabilities after scaling with 0.1:', tf.math.softmax(0.1*logits).numpy
 
 
 tf.random.set_seed(1)
-print(sample(model, starting_str="The island", 
+print(sample(model, starting_str='The island', 
              scale_factor=2.0))
 
 
 
 
 tf.random.set_seed(1)
-print(sample(model, starting_str="The island", 
+print(sample(model, starting_str='The island', 
              scale_factor=0.5))
 
 
@@ -262,11 +270,6 @@ print(sample(model, starting_str="The island",
 # 
 # Readers may ignore the next cell.
 # 
-
-
-
-
-
 
 
 
