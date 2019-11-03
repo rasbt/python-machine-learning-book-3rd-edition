@@ -1,7 +1,24 @@
+# coding: utf-8
+
+# Python Machine Learning 3rd Edition by
+# Sebastian Raschka (https://sebastianraschka.com) & Vahid Mirjalili](http://vahidmirjalili.com)
+# Packt Publishing Ltd. 2019
+#
+# Code Repository: https://github.com/rasbt/python-machine-learning-book-3rd-edition
+#
+# Code License: MIT License (https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
+
+############################################################################
+# Chapter 18: Reinforcement Learning
+############################################################################
+
+# Script: carpole/main.py
+
 import gym
 import numpy as np
 import tensorflow as tf
 import random
+import matplotlib.pyplot as plt
 from collections import namedtuple
 from collections import deque
 
@@ -35,18 +52,18 @@ class DQNAgent:
     def _build_nn_model(self, n_layers=3):
         self.model = tf.keras.Sequential()
 
-        ## Hidden layers
+        # Hidden layers
         for n in range(n_layers - 1):
             self.model.add(tf.keras.layers.Dense(
                 units=32, activation='relu'))
             self.model.add(tf.keras.layers.Dense(
                 units=32, activation='relu'))
 
-        ## Last layer
+        # Last layer
         self.model.add(tf.keras.layers.Dense(
             units=self.action_size))
 
-        ## Build & compile model
+        # Build & compile model
         self.model.build(input_shape=(None, self.state_size))
         self.model.compile(
             loss='mse',
@@ -71,7 +88,7 @@ class DQNAgent:
                 target = (r +
                           self.gamma * np.amax(
                             self.model.predict(next_s)[0]
-                        )
+                            )
                           )
             target_all = self.model.predict(s)[0]
             target_all[a] = target
@@ -92,19 +109,20 @@ class DQNAgent:
         history = self._learn(samples)
         return history.history['loss'][0]
 
-    def plot_learning_history(history):
-        fig = plt.figure(1, figsize=(14, 5))
-        ax = fig.add_subplot(1, 1, 1)
-        episodes = np.arange(len(history[0])) + 1
-        plt.plot(episodes, history[0], lw=4,
-                 marker='o', markersize=10)
-        ax.tick_params(axis='both', which='major', labelsize=15)
-        plt.xlabel('Episodes', size=20)
-        plt.ylabel('# Total Rewards', size=20)
-        plt.show()
+
+def plot_learning_history(history):
+    fig = plt.figure(1, figsize=(14, 5))
+    ax = fig.add_subplot(1, 1, 1)
+    episodes = np.arange(len(history[0])) + 1
+    plt.plot(episodes, history[0], lw=4,
+             marker='o', markersize=10)
+    ax.tick_params(axis='both', which='major', labelsize=15)
+    plt.xlabel('Episodes', size=20)
+    plt.ylabel('# Total Rewards', size=20)
+    plt.show()
 
 
-## General settings
+# General settings
 EPISODES = 200
 batch_size = 32
 init_replay_memory_size = 500
@@ -115,7 +133,7 @@ if __name__ == '__main__':
     state = env.reset()
     state = np.reshape(state, [1, agent.state_size])
 
-    ## Filling up the replay-memory
+    # Filling up the replay-memory
     for i in range(init_replay_memory_size):
         action = agent.choose_action(state)
         next_state, reward, done, _ = env.step(action)
@@ -151,4 +169,4 @@ if __name__ == '__main__':
                 break
             loss = agent.replay(batch_size)
             losses.append(loss)
-    plot_learning_history((total_rewards, losses))
+    plot_learning_history(total_rewards)
