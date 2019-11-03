@@ -25,6 +25,7 @@ import sklearn.model_selection
 
 
 
+
 # ## TensorFlow Estimators
 # 
 # ##### Steps for using pre-made estimators
@@ -45,6 +46,10 @@ np.random.seed(1)
 # 
 #  * See definition: https://developers.google.com/machine-learning/glossary/#feature_columns
 #  * Documentation: https://www.tensorflow.org/api_docs/python/tf/feature_column
+
+
+
+
 
 
 
