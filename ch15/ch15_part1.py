@@ -25,16 +25,42 @@ import os
 
 
 
+
+
+
+
 # ##  The building blocks of convolutional neural networks
 # 
 # ### Understanding CNNs and feature hierarchies
+
+
+
+
+
+# 
 # 
 # ### Performing discrete convolutions
 # 
 # ### Discrete convolutions in one dimension
 # 
+# 
+
+
+
+
+
+
+
+
+
 # ### Padding inputs to control the size of the output feature maps
 # 
+# 
+
+
+
+
+
 # ### Determining the size of the convolution output
 
 
@@ -77,6 +103,18 @@ print('Numpy Results:',
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 def conv2d(X, W, p=(0, 0), s=(1, 1)):
     W_rot = np.array(W)[::-1,::-1]
     X_orig = np.array(X)
@@ -110,11 +148,19 @@ print('SciPy Results:\n',
 
 # ## Subsampling layers
 
+
+
+
+
 # ## Putting everything together – implementing a CNN
 # 
 # ### Working with multiple input or color channels
 # 
 # 
+
+
+
+
 
 # **TIP: Reading an image file**
 
@@ -169,6 +215,10 @@ tf.print('New Shape:', img_reshaped.shape)
 
 
 
+
+
+
+
 conv_layer = keras.layers.Conv2D(
     filters=16, kernel_size=(3, 3),
     kernel_regularizer=keras.regularizers.l2(0.001))
@@ -191,6 +241,10 @@ fc_layer = keras.layers.Dense(
 #    * `from_logits=False`
 #    * `from_logits=True`
 # 
+
+
+
+
 
 
 
@@ -239,6 +293,10 @@ tf.print(
 # ## Implementing a deep convolutional neural network using TensorFlow
 # 
 # ### The multilayer CNN architecture
+
+
+
+
 
 # ### Loading and preprocessing the data
 
