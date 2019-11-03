@@ -1,4 +1,18 @@
-## Script: agent.py
+# coding: utf-8
+
+# Python Machine Learning 3rd Edition by
+# Sebastian Raschka (https://sebastianraschka.com) & Vahid Mirjalili](http://vahidmirjalili.com)
+# Packt Publishing Ltd. 2019
+#
+# Code Repository: https://github.com/rasbt/python-machine-learning-book-3rd-edition
+#
+# Code License: MIT License (https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
+
+############################################################################
+# Chapter 18: Reinforcement Learning
+############################################################################
+
+# Script: agent.py
 
 from collections import defaultdict
 import numpy as np
@@ -19,7 +33,7 @@ class Agent(object):
         self.epsilon_min = epsilon_min
         self.epsilon_decay = epsilon_decay
 
-        ## Define the q_table
+        # Define the q_table
         self.q_table = defaultdict(lambda: np.zeros(self.env.nA))
 
     def choose_action(self, state):
@@ -41,10 +55,10 @@ class Agent(object):
         else:
             q_target = r + self.gamma*np.max(self.q_table[next_s])
 
-        ## Update the q_table
+        # Update the q_table
         self.q_table[s][a] += self.lr * (q_target - q_val)
 
-        ## Adjust the epislon
+        # Adjust the epislon
         self._adjust_epsilon()
 
     def _adjust_epsilon(self):

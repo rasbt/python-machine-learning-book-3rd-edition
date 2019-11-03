@@ -1,4 +1,18 @@
-## Script: qlearning.py
+# coding: utf-8
+
+# Python Machine Learning 3rd Edition by
+# Sebastian Raschka (https://sebastianraschka.com) & Vahid Mirjalili](http://vahidmirjalili.com)
+# Packt Publishing Ltd. 2019
+#
+# Code Repository: https://github.com/rasbt/python-machine-learning-book-3rd-edition
+#
+# Code License: MIT License (https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
+
+############################################################################
+# Chapter 18: Reinforcement Learning
+############################################################################
+
+# Script: qlearning.py
 
 from gridworld_env import GridWorldEnv
 from agent import Agent
@@ -10,6 +24,7 @@ np.random.seed(1)
 
 Transition = namedtuple(
     'Transition', ('state', 'action', 'reward', 'next_state', 'done'))
+
 
 def run_qlearning(agent, env, num_episodes=50):
     history = []
@@ -33,6 +48,7 @@ def run_qlearning(agent, env, num_episodes=50):
               % (episode, final_reward, n_moves))
 
     return history
+
 
 def plot_learning_history(history):
     fig = plt.figure(1, figsize=(14, 10))
