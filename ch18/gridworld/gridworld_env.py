@@ -1,7 +1,25 @@
+# coding: utf-8
+
+# Python Machine Learning 3rd Edition by
+# Sebastian Raschka (https://sebastianraschka.com) & Vahid Mirjalili](http://vahidmirjalili.com)
+# Packt Publishing Ltd. 2019
+#
+# Code Repository: https://github.com/rasbt/python-machine-learning-book-3rd-edition
+#
+# Code License: MIT License (https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
+
+############################################################################
+# Chapter 18: Reinforcement Learning
+############################################################################
+
+# Script: gridworld_env.py
+
 import numpy as np
 from gym.envs.toy_text import discrete
 from collections import defaultdict
 import time
+import pickle
+import os
 
 from gym.envs.classic_control import rendering
 
@@ -19,30 +37,27 @@ def get_coords(row, col, loc='center'):
         xl, xr = xc - half_size, xc + half_size
         yt, yb = xc - half_size, xc + half_size
         return [(xl, yt), (xr, yt), (xr, yb), (xl, yb)]
-    elif loc=='interior_triangle':
+    elif loc == 'interior_triangle':
         x1, y1 = xc, yc + CELL_SIZE//3
         x2, y2 = xc + CELL_SIZE//3, yc - CELL_SIZE//3
         x3, y3 = xc - CELL_SIZE//3, yc - CELL_SIZE//3
         return [(x1, y1), (x2, y2), (x3, y3)]
 
+
 def draw_object(coords_list):
-    if len(coords_list) == 1: # -> circle
+    if len(coords_list) == 1:  # -> circle
         obj = rendering.make_circle(int(0.45*CELL_SIZE))
         obj_transform = rendering.Transform()
         obj.add_attr(obj_transform)
         obj_transform.set_translation(*coords_list[0])
-        obj.set_color(0.2, 0.2, 0.2) # -> black
-    elif len(coords_list) == 3: # -> triangle
+        obj.set_color(0.2, 0.2, 0.2)  # -> black
+    elif len(coords_list) == 3:  # -> triangle
         obj = rendering.FilledPolygon(coords_list)
-        obj.set_color(0.9, 0.6, 0.2) # -> yellow
-    elif len(coords_list) > 3: # -> polygon
+        obj.set_color(0.9, 0.6, 0.2)  # -> yellow
+    elif len(coords_list) > 3:  # -> polygon
         obj = rendering.FilledPolygon(coords_list)
-        obj.set_color(0.4, 0.4, 0.8) # -> blue
+        obj.set_color(0.4, 0.4, 0.8)  # -> blue
     return obj
-
-
-import pickle
-import os
 
 
 class GridWorldEnv(discrete.DiscreteEnv):
@@ -60,7 +75,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
         self.action_defs = {0: move_up, 1: move_right,
                             2: move_down, 3: move_left}
 
-        ## Number of states/actions
+        # Number of states/actions
         nS = num_cols * num_rows
         nA = len(self.action_defs)
         self.grid2state_dict = {(s // num_cols, s % num_cols): s
@@ -68,10 +83,10 @@ class GridWorldEnv(discrete.DiscreteEnv):
         self.state2grid_dict = {s: (s // num_cols, s % num_cols)
                                 for s in range(nS)}
 
-        ## Gold state
+        # Gold state
         gold_cell = (num_rows // 2, num_cols - 2)
 
-        ## Trap states
+        # Trap states
         trap_cells = [((gold_cell[0] + 1), gold_cell[1]),
                       (gold_cell[0], gold_cell[1] - 1),
                       ((gold_cell[0] - 1), gold_cell[1])]
@@ -82,7 +97,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
         self.terminal_states = [gold_state] + trap_states
         print(self.terminal_states)
 
-        ## Build the transition probability
+        # Build the transition probability
         P = defaultdict(dict)
         for s in range(nS):
             row, col = self.state2grid_dict[s]
@@ -91,7 +106,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
                 action = self.action_defs[a]
                 next_s = self.grid2state_dict[action(row, col)]
 
-                ## Terminal state
+                # Terminal state
                 if self.is_terminal(next_s):
                     r = (1.0 if next_s == self.terminal_states[0]
                          else -1.0)
@@ -104,7 +119,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
                     done = False
                 P[s][a] = [(1.0, next_s, r, done)]
 
-        ## Initial state distribution
+        # Initial state distribution
         isd = np.zeros(nS)
         isd[0] = 1.0
 
@@ -125,7 +140,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
 
         all_objects = []
 
-        ## List of border points' coordinates
+        # List of border points' coordinates
         bp_list = [
             (CELL_SIZE - MARGIN, CELL_SIZE - MARGIN),
             (screen_width - CELL_SIZE + MARGIN, CELL_SIZE - MARGIN),
@@ -137,7 +152,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
         border.set_linewidth(5)
         all_objects.append(border)
 
-        ## Vertical lines
+        # Vertical lines
         for col in range(self.num_cols + 1):
             x1, y1 = (col + 1) * CELL_SIZE, CELL_SIZE
             x2, y2 = (col + 1) * CELL_SIZE, \
@@ -145,7 +160,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
             line = rendering.PolyLine([(x1, y1), (x2, y2)], False)
             all_objects.append(line)
 
-        ## Horizontal lines
+        # Horizontal lines
         for row in range(self.num_rows + 1):
             x1, y1 = CELL_SIZE, (row + 1) * CELL_SIZE
             x2, y2 = (self.num_cols + 1) * CELL_SIZE, \
@@ -153,17 +168,17 @@ class GridWorldEnv(discrete.DiscreteEnv):
             line = rendering.PolyLine([(x1, y1), (x2, y2)], False)
             all_objects.append(line)
 
-        ## Traps: --> circles
+        # Traps: --> circles
         for cell in trap_cells:
             trap_coords = get_coords(*cell, loc='center')
             all_objects.append(draw_object([trap_coords]))
 
-        ## Gold:  --> triangle
+        # Gold:  --> triangle
         gold_coords = get_coords(*gold_cell,
                                  loc='interior_triangle')
         all_objects.append(draw_object(gold_coords))
 
-        ## Agent --> square or robot
+        # Agent --> square or robot
         if (os.path.exists('robot-coordinates.pkl') and CELL_SIZE == 100):
             agent_coord
             s = pickle.load(
