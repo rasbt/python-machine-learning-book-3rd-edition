@@ -5,6 +5,7 @@ import tensorflow as tf
 import numpy as np
 import pathlib
 import matplotlib.pyplot as plt
+import os
 import tensorflow_datasets as tfds
 
 # *Python Machine Learning 3rd Edition* by [Sebastian Raschka](https://sebastianraschka.com) & [Vahid Mirjalili](http://vahidmirjalili.com), Packt Publishing Ltd. 2019
@@ -30,7 +31,15 @@ import tensorflow_datasets as tfds
 
 # ### Performance challenges
 
+
+
+
+
 # ### What is TensorFlow?
+
+
+
+
 
 # ### How we will learn TensorFlow
 
@@ -361,7 +370,7 @@ for i,(batch_x, batch_y) in enumerate(ds):
 
 
 
-imgdir_path = pathlib.Path('images')
+imgdir_path = pathlib.Path('cat_dog_images')
 
 file_list = [str(path) for path in imgdir_path.glob('*.jpg')]
 
@@ -380,7 +389,7 @@ for i,file in enumerate(file_list):
     ax = fig.add_subplot(2, 3, i+1)
     ax.set_xticks([]); ax.set_yticks([])
     ax.imshow(img)
-    ax.set_title(file, size=15)
+    ax.set_title(os.path.basename(file), size=15)
     
 # plt.savefig('ch13-catdot-examples.pdf')
 plt.tight_layout()
@@ -389,7 +398,7 @@ plt.show()
 
 
 
-labels = [1 if 'dog' in file else 0
+labels = [1 if 'dog' in os.path.basename(file) else 0
           for file in file_list]
 print(labels)
 
@@ -554,6 +563,11 @@ for i,(image,label) in enumerate(zip(batch[0], batch[1])):
 # ---
 # 
 # Readers may ignore the next cell.
+
+
+
+
+
 
 
 
