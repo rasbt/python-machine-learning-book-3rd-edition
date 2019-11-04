@@ -31,22 +31,57 @@ from tensorflow.keras.layers import Bidirectional
 
 
 
+
+
+
+
 # # Introducing sequential data
 # 
 # ## Modeling sequential data⁠—order matters
 # 
 # ## Representing sequences
 # 
+# 
+
+
+
+
+
 # ## The different categories of sequence modeling
+
+
+
+
 
 # # RNNs for modeling sequences
 # 
 # ## Understanding the RNN looping mechanism
 # 
+
+
+
+
+
+
+
+
+
 # ## Computing activations in an RNN
 # 
+
+
+
+
+
+
+
+
+
 # ## Hidden-recurrence vs. output-recurrence
-# 
+
+
+
+
 
 
 
@@ -99,7 +134,17 @@ for t in range(len(x_seq)):
 
 # ## The challenges of learning long-range interactions
 # 
+
+
+
+
+
+# 
 # ## Long Short-Term Memory cells 
+
+
+
+
 
 # # Implementing RNNs for sequence modeling in TensorFlow
 # 
@@ -261,7 +306,7 @@ test_data = ds_test.padded_batch(
     32, padded_shapes=([-1],[]))
 
 
-# #### Embedding layers for sentence encoding
+# ### Embedding layers for sentence encoding
 # 
 # 
 #  * `input_dim`: number of words, i.e. maximum integer index + 1.
@@ -276,6 +321,10 @@ test_data = ds_test.padded_batch(
 #  the embedding layer convert each interger into float vector of size `[output_dim]`
 #    * If input shape is `[BATCH_SIZE]`, output shape will be `[BATCH_SIZE, output_dim]`
 #    * If input shape is `[BATCH_SIZE, 10]`, output shape will be `[BATCH_SIZE, 10, output_dim]`
+
+
+
+
 
 
 

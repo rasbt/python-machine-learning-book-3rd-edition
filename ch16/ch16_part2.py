@@ -21,8 +21,17 @@ import tensorflow as tf
 
 
 
+
+
+
+
 # ## Project two: character-level language modeling in TensorFlow
 # 
+
+
+
+
+
 # ### Preprocessing the dataset
 
 
@@ -49,6 +58,10 @@ print('Unique Characters:', len(char_set))
 
 
 
+
+
+
+
 chars_sorted = sorted(char_set)
 char2int = {ch:i for i,ch in enumerate(chars_sorted)}
 char_array = np.array(chars_sorted)
@@ -61,6 +74,10 @@ print('Text encoded shape: ', text_encoded.shape)
 
 print(text[:15], '     == Encoding ==> ', text_encoded[:15])
 print(text_encoded[15:21], ' == Reverse  ==> ', ''.join(char_array[text_encoded[15:21]]))
+
+
+
+
 
 
 
@@ -87,6 +104,10 @@ for seq in ds_chunks.take(1):
     print(input_seq, ' -> ', target)
     print(repr(''.join(char_array[input_seq])), 
           ' -> ', repr(''.join(char_array[target])))
+
+
+
+
 
 
 
@@ -253,9 +274,21 @@ print(sample(model, starting_str='The island',
 # 
 # ## A basic version of self-attention
 # 
+# 
+
+
+
+
+
 # ### Parameterizing the self-attention mechanism with query, key, and value weights
 # 
+
+# 
 # ## Multi-head attention and the Transformer block
+
+
+
+
 
 # 
 # ...
