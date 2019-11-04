@@ -27,6 +27,7 @@ from collections import Counter
 
 
 
+
 # ## Gender classification from face images using CNN
 # 
 
@@ -120,7 +121,7 @@ img_resized = tf.image.resize(
     img_center_crop, size=(218, 178))
 ax.imshow(img_resized.numpy().astype('uint8'))
 
-#plt.savefig('figures/15_14.png', dpi=300)
+# plt.savefig('figures/15_14.png', dpi=300)
 plt.show()
 
 
@@ -156,7 +157,7 @@ for i,example in enumerate(celeba_train.take(3)):
     if i == 0:
         ax.set_title('Step 3: Resize', size=15)
 
-#plt.savefig('figures/15_15.png', dpi=300)
+# plt.savefig('figures/15_15.png', dpi=300)
 plt.show()
 
 
@@ -226,6 +227,12 @@ ds_valid = ds_valid.batch(BATCH_SIZE)
 
 
 # ### Training a CNN gender classifier
+# 
+# * **Global Average Pooling**
+
+
+
+
 
 
 
