@@ -21,6 +21,10 @@ from mlxtend.plotting import plot_decision_regions
 
 
 
+
+
+
+
 # ## The key features of TensorFlow
 # 
 # ### TensorFlow's computation graphs: migrating to TensorFlow v2
@@ -28,6 +32,10 @@ from mlxtend.plotting import plot_decision_regions
 # ### Understanding computation graphs
 # 
 # 
+
+
+
+
 
 # ### Creating a graph in TensorFlow v1.x
 # 
