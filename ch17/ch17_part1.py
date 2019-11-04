@@ -2,7 +2,7 @@
 
 
 import tensorflow as tf
-from google.colab import drive
+#from google.colab import drive
 import tensorflow_datasets as tfds
 import numpy as np
 import matplotlib.pyplot as plt
@@ -15,8 +15,7 @@ import itertools
 # 
 # Code License: [MIT License](https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
 
-# Chapter 17: Generative Adversarial Networks (part 1/2)
-# =====
+# # Chapter 17: Generative Adversarial Networks (Part 1/2)
 
 # Note that the optional watermark extension is a small IPython notebook plugin that I developed to make the code reproducible. You can just skip the following line(s).
 
@@ -83,13 +82,18 @@ print(tf.__version__)
 
 print("GPU Available:", tf.test.is_gpu_available())
 
-device_name = tf.test.gpu_device_name()
+if tf.test.is_gpu_available():
+    device_name = tf.test.gpu_device_name()
+
+else:
+    device_name = 'cpu:0'
+    
 print(device_name)
 
 
 
 
-drive.mount('/content/drive/')
+#drive.mount('/content/drive/')
 
 
 # ## Implementing the generator and the discriminator networks 
@@ -145,7 +149,7 @@ def make_discriminator_network(
 
 image_size = (28, 28)
 z_size = 20
-mode_z = 'uniform' # 'uniform' vs. 'normal'
+mode_z = 'uniform'  # 'uniform' vs. 'normal'
 gen_hidden_layers = 1
 gen_hidden_size = 100
 disc_hidden_layers = 1
@@ -213,7 +217,7 @@ print('dtype: ', example.dtype, ' Min: {} Max: {}'.format(np.min(example), np.ma
 
 mnist_trainset = mnist_trainset.batch(32, drop_remainder=True)
 input_z, input_real = next(iter(mnist_trainset))
-print('input-z -- shape:   ', input_z.shape)
+print('input-z -- shape:', input_z.shape)
 print('input-real -- shape:', input_real.shape)
 
 g_output = gen_model(input_z)
@@ -250,6 +254,8 @@ print('Discriminator Losses: Real {:.4f} Fake {:.4f}'
 
 
 
+
+
 num_epochs = 100
 batch_size = 64
 image_size = (28, 28)
@@ -271,6 +277,7 @@ if mode_z == 'uniform':
 elif mode_z == 'normal':
     fixed_z = tf.random.normal(
         shape=(batch_size, z_size))
+
 
 def create_samples(g_model, input_z):
     g_output = g_model(input_z, training=False)
@@ -318,7 +325,7 @@ for epoch in range(1, num_epochs+1):
             g_output = gen_model(input_z)
             d_logits_fake = disc_model(g_output, training=True)
             labels_real = tf.ones_like(d_logits_fake)
-            g_loss = loss_fn(y_true=labels_real,y_pred=d_logits_fake)
+            g_loss = loss_fn(y_true=labels_real, y_pred=d_logits_fake)
             
         g_grads = g_tape.gradient(g_loss, gen_model.trainable_variables)
         g_optimizer.apply_gradients(
@@ -358,7 +365,7 @@ for epoch in range(1, num_epochs+1):
     all_losses.append(epoch_losses)
     all_d_vals.append(epoch_d_vals)
     print(
-        'Epoch {:-3d} | ET {:.2f} min | Avg Losses >>'
+        'Epoch {:03d} | ET {:.2f} min | Avg Losses >>'
         ' G/D {:.4f}/{:.4f} [D-Real: {:.4f} D-Fake: {:.4f}]'
         .format(
             epoch, (time.time() - start_time)/60, 
@@ -432,7 +439,7 @@ ax.tick_params(axis='both', which='major', labelsize=15)
 ax2.tick_params(axis='both', which='major', labelsize=15)
 
 
-plt.savefig('/content/drive/My Drive/Colab Notebooks/PyML-3rd-edition/ch17-gan-learning-curve.pdf')
+# plt.savefig('images/ch17-gan-learning-curve.pdf')
 plt.show()
 
 
@@ -456,10 +463,17 @@ for i,e in enumerate(selected_epochs):
         image = epoch_samples[e-1][j]
         ax.imshow(image, cmap='gray_r')
     
-plt.savefig('/content/drive/My Drive/Colab Notebooks/PyML-3rd-edition/ch17-vanila-gan-samples.pdf')
+#plt.savefig('images/ch17-vanila-gan-samples.pdf')
 plt.show()
 
 
+# 
+# ----
+
+# 
+# 
+# Readers may ignore the next cell.
+# 
 
 
 
