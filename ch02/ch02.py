@@ -2,6 +2,7 @@
 
 
 import numpy as np
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
@@ -22,7 +23,15 @@ from matplotlib.colors import ListedColormap
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 # ### Overview
 # 
@@ -158,10 +167,15 @@ np.arccos(v1.dot(v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))
 
 
 
-df = pd.read_csv('https://archive.ics.uci.edu/ml/'
-        'machine-learning-databases/iris/iris.data',
+
+s = os.path.join('https://archive.ics.uci.edu', 'ml',
+                 'machine-learning-databases', 'iris','iris.data')
+print('URL:', s)
+
+df = pd.read_csv(s,
                  header=None,
                  encoding='utf-8')
+
 df.tail()
 
 
