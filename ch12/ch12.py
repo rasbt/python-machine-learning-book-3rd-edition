@@ -124,7 +124,7 @@ if (sys.version_info > (3, 0)):
 else:
     writemode = 'w'
 
-zipped_mnist = [f for f in os.listdir('./') if f.endswith('ubyte.gz')]
+zipped_mnist = [f for f in os.listdir() if f.endswith('ubyte.gz')]
 for z in zipped_mnist:
     with gzip.GzipFile(z, mode='rb') as decompressed, open(z[:-3], writemode) as outfile:
         outfile.write(decompressed.read()) 
@@ -556,6 +556,7 @@ nn.fit(X_train=X_train[:55000],
        y_train=y_train[:55000],
        X_valid=X_train[55000:],
        y_valid=y_train[55000:])
+
 
 
 
