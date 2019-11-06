@@ -180,8 +180,7 @@ class GridWorldEnv(discrete.DiscreteEnv):
 
         # Agent --> square or robot
         if (os.path.exists('robot-coordinates.pkl') and CELL_SIZE == 100):
-            agent_coord
-            s = pickle.load(
+            agent_coords = pickle.load(
                 open('robot-coordinates.pkl', 'rb'))
             starting_coords = get_coords(0, 0, loc='center')
             agent_coords += np.array(starting_coords)
