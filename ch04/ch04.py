@@ -37,7 +37,15 @@ from sklearn.feature_selection import SelectFromModel
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 
 # ### Overview
@@ -134,7 +142,7 @@ df.dropna(how='all')
 
 
 
-# drop rows that have less than 3 real values 
+# drop rows that have fewer than 3 real values 
 
 df.dropna(thresh=4)
 
@@ -165,6 +173,11 @@ imr = imr.fit(df.values)
 imputed_data = imr.transform(df.values)
 imputed_data
 
+
+
+
+
+df.fillna(df.mean())
 
 
 # ## Understanding the scikit-learn estimator API
@@ -304,6 +317,31 @@ color_ohe = OneHotEncoder(categories='auto', drop='first')
 c_transf = ColumnTransformer([ ('onehot', color_ohe, [0]),
                                ('nothing', 'passthrough', [1, 2])])
 c_transf.fit_transform(X).astype(float)
+
+
+# ## Optional: Ordinal Encoding
+
+# If we are unsure about the numerical differences between the categories of ordinal features, we can also encode them using a thresholded one-hot encoded format. For example, we can split the feature "size" with values M, L, and XL into two new features "x > M", "x > L", and . For example, let's consider the original DataFrame:
+
+
+
+df = pd.DataFrame([['green', 'M', 10.1, 'class2'],
+                   ['red', 'L', 13.5, 'class1'],
+                   ['blue', 'XL', 15.3, 'class2']])
+
+df.columns = ['color', 'size', 'price', 'classlabel']
+df
+
+
+# We can use the `apply` method of pandas' DataFrames to write custom lambda expressions in order to encode these variables using the value-threshold approach:
+
+
+
+df['x > M'] = df['size'].apply(lambda x: 1 if x in {'L', 'XL'} else 0)
+df['x > L'] = df['size'].apply(lambda x: 1 if x == 'XL' else 0)
+
+del df['size']
+df
 
 
 
