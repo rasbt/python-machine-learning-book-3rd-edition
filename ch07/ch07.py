@@ -164,7 +164,7 @@ class MajorityVoteClassifier(BaseEstimator,
     classifiers : array-like, shape = [n_classifiers]
       Different classifiers for the ensemble
 
-    vote : str, {'classlabel', 'probability'} (default='label')
+    vote : str, {'classlabel', 'probability'} (default='classlabel')
       If 'classlabel' the prediction is based on the argmax of
         class labels. Else if 'probability', the argmax of
         the sum of probabilities is used to predict the class label
