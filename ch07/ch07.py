@@ -44,7 +44,15 @@ from sklearn.ensemble import AdaBoostClassifier
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 
 # ### Overview
@@ -459,25 +467,6 @@ mv_clf.get_params()
 
 
 
-params = {'decisiontreeclassifier__max_depth': [1, 2],
-          'pipeline-1__clf__C': [0.001, 0.1, 100.0]}
-
-grid = GridSearchCV(estimator=mv_clf,
-                    param_grid=params,
-                    cv=10,
-                    iid=False,
-                    scoring='roc_auc')
-grid.fit(X_train, y_train)
-
-for r, _ in enumerate(grid.cv_results_['mean_test_score']):
-    print("%0.3f +/- %0.2f %r"
-          % (grid.cv_results_['mean_test_score'][r], 
-             grid.cv_results_['std_test_score'][r] / 2.0, 
-             grid.cv_results_['params'][r]))
-
-
-
-
 
 params = {'decisiontreeclassifier__max_depth': [1, 2],
           'pipeline-1__clf__C': [0.001, 0.1, 100.0]}
@@ -664,11 +653,15 @@ for idx, clf, tt in zip([0, 1],
     axarr[idx].set_title(tt)
 
 axarr[0].set_ylabel('Alcohol', fontsize=12)
-plt.text(10.2, -0.5,
-         s='OD280/OD315 of diluted wines',
-         ha='center', va='center', fontsize=12)
 
 plt.tight_layout()
+plt.text(0, -0.2,
+         s='OD280/OD315 of diluted wines',
+         ha='center',
+         va='center',
+         fontsize=12,
+         transform=axarr[1].transAxes)
+
 #plt.savefig('images/07_08.png', dpi=300, bbox_inches='tight')
 plt.show()
 
@@ -750,11 +743,15 @@ for idx, clf, tt in zip([0, 1],
     axarr[idx].set_title(tt)
 
 axarr[0].set_ylabel('Alcohol', fontsize=12)
-plt.text(10.2, -0.5,
-         s='OD280/OD315 of diluted wines',
-         ha='center', va='center', fontsize=12)
 
 plt.tight_layout()
+plt.text(0, -0.2,
+         s='OD280/OD315 of diluted wines',
+         ha='center',
+         va='center',
+         fontsize=12,
+         transform=axarr[1].transAxes)
+
 #plt.savefig('images/07_11.png', dpi=300, bbox_inches='tight')
 plt.show()
 
