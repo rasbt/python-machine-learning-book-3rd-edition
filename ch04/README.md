@@ -1,7 +1,7 @@
 Python Machine Learning - Code Examples
 
 
-##  Chapter 4: Building Good Training Sets – Data Preprocessing
+##  Chapter 4: Building Good Training Datasets – Data Preprocessing
 
 ### Chapter Outline
 
