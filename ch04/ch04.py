@@ -29,7 +29,7 @@ from sklearn.feature_selection import SelectFromModel
 
 # # Python Machine Learning - Code Examples
 
-# # Chapter 4 - Building Good Training Sets – Data Preprocessing
+# # Chapter 4 - Building Good Training Datasets – Data Preprocessing
 
 # Note that the optional watermark extension is a small IPython notebook plugin that I developed to make the code reproducible. You can just skip the following line(s).
 
