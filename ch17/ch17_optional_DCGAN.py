@@ -15,7 +15,7 @@ import itertools
 # 
 # Code License: [MIT License](https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
 
-# # Chapter 17: Generative Adversarial Networks (Optional, DCGAN)
+# # Chapter 17 - Generative Adversarial Networks for Synthesizing New Data (Optional, DCGAN)
 
 # Note that the optional watermark extension is a small IPython notebook plugin that I developed to make the code reproducible. You can just skip the following line(s).
 
