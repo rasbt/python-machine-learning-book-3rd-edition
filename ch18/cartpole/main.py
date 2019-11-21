@@ -8,9 +8,9 @@
 #
 # Code License: MIT License (https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
 
-############################################################################
-# Chapter 18: Reinforcement Learning
-############################################################################
+#################################################################################
+# Chapter 18 - Reinforcement Learning for Decision Making in Complex Environments
+#################################################################################
 
 # Script: carpole/main.py
 
