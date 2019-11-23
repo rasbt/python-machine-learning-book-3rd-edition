@@ -372,7 +372,7 @@ for i,(batch_x, batch_y) in enumerate(ds):
 
 imgdir_path = pathlib.Path('cat_dog_images')
 
-file_list = [str(path) for path in imgdir_path.glob('*.jpg')]
+file_list = sorted([str(path) for path in imgdir_path.glob('*.jpg')])
 
 print(file_list)
 
