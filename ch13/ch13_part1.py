@@ -485,7 +485,7 @@ celeba_bldr.download_and_prepare()
 
 
 # Load data from disk as tf.data.Datasets
-datasets = celeba_bldr.as_dataset()
+datasets = celeba_bldr.as_dataset(shuffle_files=False)
 
 datasets.keys()
 
