@@ -429,6 +429,13 @@ print('Probabilities:\n', y_probas)
 np.sum(y_probas)
 
 
+
+
+
+Z_tensor = tf.expand_dims(Z, axis=0)
+tf.keras.activations.softmax(Z_tensor)
+
+
 # ### Broadening the output spectrum using a hyperbolic tangent
 
 
@@ -468,10 +475,28 @@ np.tanh(z)
 
 
 
-log_act = expit(z)
+
+tf.keras.activations.tanh(z)
+
+
+
+
+
+expit(z)
+
+
+
+
+tf.keras.activations.sigmoid(z)
 
 
 # ### Rectified linear unit activation
+
+
+
+
+tf.keras.activations.relu(z)
+
 
 # ## Summary
 
