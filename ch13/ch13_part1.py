@@ -485,7 +485,7 @@ celeba_bldr.download_and_prepare()
 
 
 # Load data from disk as tf.data.Datasets
-datasets = celeba_bldr.as_dataset()
+datasets = celeba_bldr.as_dataset(shuffle_files=False)
 
 datasets.keys()
 
@@ -524,6 +524,7 @@ for i,(image,label) in enumerate(zip(images, labels)):
     ax.imshow(image)
     ax.set_title('{}'.format(label), size=15)
     
+
 plt.show()
 
 
@@ -531,7 +532,8 @@ plt.show()
 
 
 
-mnist, mnist_info = tfds.load('mnist', with_info=True)
+mnist, mnist_info = tfds.load('mnist', with_info=True,
+                              shuffle_files=False)
 
 print(mnist_info)
 
@@ -557,6 +559,9 @@ for i,(image,label) in enumerate(zip(batch[0], batch[1])):
     ax.set_xticks([]); ax.set_yticks([])
     ax.imshow(image[:, :, 0], cmap='gray_r')
     ax.set_title('{}'.format(label), size=15)
+    
+#plt.savefig('ch13-mnist-new.png')
+plt.show()
 
 
 
