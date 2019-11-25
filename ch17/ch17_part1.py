@@ -439,7 +439,7 @@ ax.tick_params(axis='both', which='major', labelsize=15)
 ax2.tick_params(axis='both', which='major', labelsize=15)
 
 
-# plt.savefig('images/ch17-gan-learning-curve.pdf')
+#plt.savefig('images/ch17-gan-learning-curve.pdf')
 plt.show()
 
 
