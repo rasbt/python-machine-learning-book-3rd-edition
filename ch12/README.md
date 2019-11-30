@@ -1,12 +1,11 @@
 Python Machine Learning - Code Examples
 
 
-##  Chapter 12: Implementing a Multilayer Artificial Neural
-Network from Scratch
+##  Chapter 12: Implementing a Multilayer Artificial Neural Network from Scratch
 
 ### Chapter Outline
 
-- Modeling complex functions with arti cial neural networks
+- Modeling complex functions with artificial neural networks
   - Single-layer neural network recap
   - Introducing the multilayer neural network architecture
   - Activating a neural network via forward propagation
