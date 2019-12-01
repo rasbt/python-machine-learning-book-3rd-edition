@@ -1,39 +1,34 @@
 Python Machine Learning - Code Examples
 
 
-##  Chapter 13: Parallelizing Neural Network Training with TensorFlow 
+##  Chapter 14: Going Deeper – The Mechanics of TensorFlow
 
 
 ### Chapter Outline
 
-- TensorFlow and training performance
-  - Performance challenges
-  - What is TensorFlow?
-  - How we will learn TensorFlow
-- First steps with TensorFlow
-  - Installing TensorFlow
-  - Creating tensors in TensorFlow
-  - Manipulating the data type and shape of a tensor
-  - Applying mathematical operations to tensors
-  - Split, stack, and concatenate tensors
-  - Building input pipelines using tf.data – the TensorFlow Dataset API
-    - Creating a TensorFlow Dataset from existing tensors
-    - Combining two tensors into a joint dataset
-    - Shuffle, batch, and repeat
-    - Creating a dataset from files on your local storage disk
-    - Fetching available datasets from the `tensorflow_datasets` library
-- Building an NN model in TensorFlow
-  - The TensorFlow Keras API (tf.keras)
-  - Building a linear regression model
-  - Model training via the `.compile()` and `.fit()` methods 
-  - Building a multilayer perceptron for classifying flowers in the Iris dataset
-  - Evaluating the trained model on the test dataset
-  - Saving and reloading the trained model
-- Choosing activation functions for multilayer NNs
-  - Logistic function recap
-  - Estimating class probabilities in multiclass classification via the softmax function
-  - Broadening the output spectrum using a hyperbolic tangent
-  - Rectified linear unit activation
+- The key features of TensorFlow
+  - TensorFlow's computation graphs: migrating to TensorFlow v2
+     - Understanding computation graphs
+     - Creating a graph in TensorFlow v1.x
+     - Migrating a graph to TensorFlow v2
+     - Loading input data into a model: TensorFlow v1.x style
+     - Loading input data into a model: TensorFlow v2 style
+  - Improving computational performance with function decorators
+  - TensorFlow Variable objects for storing and updating model parameters
+  - Computing gradients via automatic differentiation and GradientTape
+     - Computing the gradients of the loss with respect to trainable variables
+     - Computing gradients with respect to nontrainable tensors
+     - Keeping resources for multiple gradient computations
+- Simplifying implementations of common architectures via the Keras API
+  - Solving an XOR classification problem
+  - Making model building more flexible with Keras' functional API
+  - Implementing models based on Keras' Model class
+  - Writing custom Keras layers
+- TensorFlow Estimators
+  - Working with feature columns
+  - Machine learning with pre-made Estimators
+  - Using Estimators for MNIST handwritten digit classification
+  - Creating a custom Estimator from an existing Keras model
 - Summary
 
 ### A note on using the code examples
@@ -56,7 +51,7 @@ A window will open up in your browser, which you can then use to navigate to the
 
 **More installation and setup instructions can be found in the [README.md file of Chapter 1](../ch01/README.md)**.
 
-**(Even if you decide not to install Jupyter Notebook, note that you can also view the notebook files on GitHub by simply clicking on them: [`ch14_part1.ipynb`](ch14_part1.ipynb) and [`ch14_part2.ipynb`](ch14_part2.ipynb))**
+**(Even if you decide not to install Jupyter Notebook, note that you can also view the notebook files on GitHub by simply clicking on them: [`ch12.ipynb`](ch12.ipynb))**
 
 In addition to the code examples, I added a table of contents to each Jupyter notebook as well as section headers that are consistent with the content of the book. Also, I included the original images and figures in hope that these make it easier to navigate and work with the code interactively as you are reading the book.
 
