@@ -56,7 +56,7 @@ A window will open up in your browser, which you can then use to navigate to the
 
 **More installation and setup instructions can be found in the [README.md file of Chapter 1](../ch01/README.md)**.
 
-**(Even if you decide not to install Jupyter Notebook, note that you can also view the notebook files on GitHub by simply clicking on them: [`ch12.ipynb`](ch12.ipynb))**
+**(Even if you decide not to install Jupyter Notebook, note that you can also view the notebook files on GitHub by simply clicking on them: [`ch13_part1.ipynb`](ch13_part1.ipynb) and [`ch13_part2.ipynb`](ch13_part2.ipynb))**
 
 In addition to the code examples, I added a table of contents to each Jupyter notebook as well as section headers that are consistent with the content of the book. Also, I included the original images and figures in hope that these make it easier to navigate and work with the code interactively as you are reading the book.
 
