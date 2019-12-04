@@ -278,7 +278,9 @@ tf.print('dL/dw : ', dloss_dw)
 
 
 # verifying the computed gradient
-tf.print((-2)*x*( y-(w*x+b) )) 
+#tf.print(-2*x * (-b - w*x + y))
+
+tf.print(2*x * ((w*x + b) - y))
 
 
 # ### Computing gradients with respect to non-trainable tensors
@@ -300,7 +302,7 @@ tf.print('dL/dx:', dloss_dx)
 
 
 # verifying the computed gradient
-tf.print((-2)*w*( y-(w*x+b) )) 
+tf.print(2*w * ((w*x + b) - y))
 
 
 # ### Keeping resources for multiple gradient computations 
