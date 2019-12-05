@@ -35,7 +35,15 @@ from sklearn.neighbors import KNeighborsClassifier
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 # ### Overview
 
@@ -627,7 +635,7 @@ ax.axhline(y=1.0, linewidth=1, color='k', linestyle='--')
 plt.ylim([0, 1.1])
 plt.xlabel('p(i=1)')
 plt.ylabel('impurity index')
-plt.savefig('images/03_19.png', dpi=300, bbox_inches='tight')
+#plt.savefig('images/03_19.png', dpi=300, bbox_inches='tight')
 plt.show()
 
 

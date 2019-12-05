@@ -119,8 +119,8 @@ from sklearn.ensemble import RandomForestRegressor
 
 
 df = pd.read_csv('https://raw.githubusercontent.com/rasbt/'
-                 'python-machine-learning-book-2nd-edition'
-                 '/master/code/ch10/housing.data.txt',
+                 'python-machine-learning-book-3rd-edition/'
+                 'master/ch10/housing.data.txt',
                  header=None,
                  sep='\s+')
 
@@ -154,7 +154,8 @@ df.head()
 
 cols = ['LSTAT', 'INDUS', 'NOX', 'RM', 'MEDV']
 
-scatterplotmatrix(df[cols].values, figsize=(10, 8), names=cols)
+scatterplotmatrix(df[cols].values, figsize=(10, 8), 
+                  names=cols, alpha=0.5)
 plt.tight_layout()
 #plt.savefig('images/10_03.png', dpi=300)
 plt.show()
