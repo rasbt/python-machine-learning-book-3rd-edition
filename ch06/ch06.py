@@ -171,9 +171,7 @@ print('Test Accuracy: %.3f' % pipe_lr.score(X_test, y_test))
 
     
 
-kfold = StratifiedKFold(n_splits=10,
-                        shuffle=True,
-                        random_state=1).split(X_train, y_train)
+kfold = StratifiedKFold(n_splits=10).split(X_train, y_train)
 
 scores = []
 for k, (train, test) in enumerate(kfold):
@@ -504,9 +502,7 @@ pipe_lr = make_pipeline(StandardScaler(),
 X_train2 = X_train[:, [4, 14]]
     
 
-cv = list(StratifiedKFold(n_splits=3, 
-                          shuffle=True,
-                          random_state=1).split(X_train, y_train))
+cv = list(StratifiedKFold(n_splits=3).split(X_train, y_train))
 
 fig = plt.figure(figsize=(7, 5))
 
