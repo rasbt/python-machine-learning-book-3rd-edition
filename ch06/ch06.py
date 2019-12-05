@@ -172,6 +172,7 @@ print('Test Accuracy: %.3f' % pipe_lr.score(X_test, y_test))
     
 
 kfold = StratifiedKFold(n_splits=10,
+                        shuffle=True,
                         random_state=1).split(X_train, y_train)
 
 scores = []
@@ -329,6 +330,7 @@ param_grid = [{'svc__C': param_range,
 gs = GridSearchCV(estimator=pipe_svc, 
                   param_grid=param_grid, 
                   scoring='accuracy', 
+                  refit=True,
                   cv=10,
                   n_jobs=-1)
 gs = gs.fit(X_train, y_train)
@@ -339,7 +341,11 @@ print(gs.best_params_)
 
 
 clf = gs.best_estimator_
-clf.fit(X_train, y_train)
+
+# clf.fit(X_train, y_train) 
+# note that we do not need to refit the classifier
+# because this is done automatically via refit=True.
+
 print('Test accuracy: %.3f' % clf.score(X_test, y_test))
 
 
@@ -499,6 +505,7 @@ X_train2 = X_train[:, [4, 14]]
     
 
 cv = list(StratifiedKFold(n_splits=3, 
+                          shuffle=True,
                           random_state=1).split(X_train, y_train))
 
 fig = plt.figure(figsize=(7, 5))
