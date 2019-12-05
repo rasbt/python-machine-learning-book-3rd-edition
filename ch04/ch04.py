@@ -319,9 +319,10 @@ c_transf = ColumnTransformer([ ('onehot', color_ohe, [0]),
 c_transf.fit_transform(X).astype(float)
 
 
-# ## Optional: Ordinal Encoding
 
-# If we are unsure about the numerical differences between the categories of ordinal features, we can also encode them using a thresholded one-hot encoded format. For example, we can split the feature "size" with values M, L, and XL into two new features "x > M", "x > L", and . For example, let's consider the original DataFrame:
+# ## Optional: Encoding Ordinal Features
+
+# If we are unsure about the numerical differences between the categories of ordinal features, or the difference between two ordinal values is not defined, we can also encode them using a threshold encoding with 0/1 values. For example, we can split the feature "size" with values M, L, and XL into two new features "x > M" and "x > L". Let's consider the original DataFrame:
 
 
 
