@@ -341,8 +341,8 @@ tf.print('Updated bias:', b)
 
 
 model = tf.keras.Sequential()
-model.add(tf.keras.layers.Dense(16, activation='relu'))
-model.add(tf.keras.layers.Dense(32, activation='relu'))
+model.add(tf.keras.layers.Dense(units=16, activation='relu'))
+model.add(tf.keras.layers.Dense(units=32, activation='relu'))
 
 ## late variable creation
 model.build(input_shape=(None, 4))
@@ -729,9 +729,9 @@ tf.random.set_seed(1)
 
 model = tf.keras.Sequential([
     NoisyLinear(4, noise_stddev=0.1),
-    tf.keras.layers.Dense(4, activation='relu'),
-    tf.keras.layers.Dense(4, activation='relu'),
-    tf.keras.layers.Dense(1, activation='sigmoid')])
+    tf.keras.layers.Dense(units=4, activation='relu'),
+    tf.keras.layers.Dense(units=4, activation='relu'),
+    tf.keras.layers.Dense(units=1, activation='sigmoid')])
 
 model.build(input_shape=(None, 2))
 model.summary()

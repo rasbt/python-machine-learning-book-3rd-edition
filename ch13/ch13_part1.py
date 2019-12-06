@@ -212,7 +212,7 @@ t = tf.random.uniform((5,))
 
 print(t.numpy())
 
-t_splits = tf.split(t, [3, 2])
+t_splits = tf.split(t, num_or_size_splits=[3, 2])
 
 [item.numpy() for item in t_splits]
 
@@ -348,7 +348,29 @@ for i,(batch_x, batch_y) in enumerate(ds):
 tf.random.set_seed(1)
 
 ## Order 1: shuffle -> batch -> repeat
+ds = ds_joint.shuffle(4).batch(2).repeat(3)
+
+for i,(batch_x, batch_y) in enumerate(ds):
+    print(i, batch_x.shape, batch_y.numpy())
+
+
+
+
+tf.random.set_seed(1)
+
+## Order 1: shuffle -> batch -> repeat
 ds = ds_joint.shuffle(4).batch(2).repeat(20)
+
+for i,(batch_x, batch_y) in enumerate(ds):
+    print(i, batch_x.shape, batch_y.numpy())
+
+
+
+
+tf.random.set_seed(1)
+
+## Order 2: batch -> shuffle -> repeat
+ds = ds_joint.batch(2).shuffle(4).repeat(3)
 
 for i,(batch_x, batch_y) in enumerate(ds):
     print(i, batch_x.shape, batch_y.numpy())
@@ -560,7 +582,6 @@ for i,(image,label) in enumerate(zip(batch[0], batch[1])):
     ax.imshow(image[:, :, 0], cmap='gray_r')
     ax.set_title('{}'.format(label), size=15)
     
-#plt.savefig('ch13-mnist-new.png')
 plt.show()
 
 

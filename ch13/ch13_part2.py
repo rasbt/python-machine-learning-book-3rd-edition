@@ -263,19 +263,19 @@ next(iter(ds_train_orig))
 
 
 
-model = tf.keras.Sequential([
+iris_model = tf.keras.Sequential([
     tf.keras.layers.Dense(16, activation='sigmoid', 
                           name='fc1', input_shape=(4,)),
     tf.keras.layers.Dense(3, name='fc2', activation='softmax')])
 
-model.summary()
+iris_model.summary()
 
 
 
 
-model.compile(optimizer='adam',
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+iris_model.compile(optimizer='adam',
+                   loss='sparse_categorical_crossentropy',
+                   metrics=['accuracy'])
 
 
 
@@ -291,9 +291,9 @@ ds_train = ds_train.batch(batch_size=batch_size)
 ds_train = ds_train.prefetch(buffer_size=1000)
 
 
-history = model.fit(ds_train, epochs=num_epochs,
-                    steps_per_epoch=steps_per_epoch, 
-                    verbose=0)
+history = iris_model.fit(ds_train, epochs=num_epochs,
+                         steps_per_epoch=steps_per_epoch, 
+                         verbose=0)
 
 
 
@@ -322,7 +322,7 @@ plt.show()
 
 
 
-results = model.evaluate(ds_test.batch(50), verbose=0)
+results = iris_model.evaluate(ds_test.batch(50), verbose=0)
 print('Test loss: {:.4f}   Test Acc.: {:.4f}'.format(*results))
 
 
@@ -330,22 +330,22 @@ print('Test loss: {:.4f}   Test Acc.: {:.4f}'.format(*results))
 
 
 
-model.save('iris-classifier.h5', 
-           overwrite=True,
-           include_optimizer=True,
-           save_format='h5')
+iris_model.save('iris-classifier.h5', 
+                overwrite=True,
+                include_optimizer=True,
+                save_format='h5')
 
 
 
 
-model_new = tf.keras.models.load_model('iris-classifier.h5')
+iris_model_new = tf.keras.models.load_model('iris-classifier.h5')
 
-model_new.summary()
-
-
+iris_model_new.summary()
 
 
-results = model_new.evaluate(ds_test.batch(50), verbose=0)
+
+
+results = iris_model_new.evaluate(ds_test.batch(50), verbose=0)
 print('Test loss: {:.4f}   Test Acc.: {:.4f}'.format(*results))
 
 
@@ -363,7 +363,7 @@ print('Training Set: ',len(labels_train), 'Test Set: ', len(labels_test))
 
 
 
-model.to_json()
+iris_model_new.to_json()
 
 
 # ## Choosing activation functions for multilayer neural networks
