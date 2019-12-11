@@ -10,9 +10,9 @@ Code repositories for the 1st and 2nd edition are available at
 
 **Python Machine Learning, 3rd Ed.**  
 
-to be published December 9th, 2019
+to be published December 12th, 2019
 
-Paperback: 748 pages  
+Paperback: 770 pages  
 Publisher: Packt Publishing  
 Language: English
 
