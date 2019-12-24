@@ -21,7 +21,7 @@ class NeuralNetMLP(object):
     minibatch_size : int (default: 1)
         Number of training examples per minibatch.
     seed : int (default: None)
-        Random seed for initalizing weights and shuffling.
+        Random seed for initializing weights and shuffling.
 
     Attributes
     -----------
@@ -56,7 +56,7 @@ class NeuralNetMLP(object):
 
         """
         onehot = np.zeros((n_classes, y.shape[0]))
-        for idx, val in enumerate(y):
+        for idx, val in enumerate(y.astype(int)):
             onehot[val, idx] = 1.
         return onehot.T
 
@@ -68,16 +68,16 @@ class NeuralNetMLP(object):
         """Compute forward propagation step"""
 
         # step 1: net input of hidden layer
-        # [n_samples, n_features] dot [n_features, n_hidden]
-        # -> [n_samples, n_hidden]
+        # [n_examples, n_features] dot [n_features, n_hidden]
+        # -> [n_examples, n_hidden]
         z_h = np.dot(X, self.w_h) + self.b_h
 
         # step 2: activation of hidden layer
         a_h = self._sigmoid(z_h)
 
         # step 3: net input of output layer
-        # [n_samples, n_hidden] dot [n_hidden, n_classlabels]
-        # -> [n_samples, n_classlabels]
+        # [n_examples, n_hidden] dot [n_hidden, n_classlabels]
+        # -> [n_examples, n_classlabels]
 
         z_out = np.dot(a_h, self.w_out) + self.b_out
 
@@ -91,9 +91,9 @@ class NeuralNetMLP(object):
 
         Parameters
         ----------
-        y_enc : array, shape = (n_samples, n_labels)
+        y_enc : array, shape = (n_examples, n_labels)
             one-hot encoded class labels.
-        output : array, shape = [n_samples, n_output_units]
+        output : array, shape = [n_examples, n_output_units]
             Activation of the output layer (forward propagation)
 
         Returns
@@ -109,7 +109,7 @@ class NeuralNetMLP(object):
         term1 = -y_enc * (np.log(output))
         term2 = (1. - y_enc) * np.log(1. - output)
         cost = np.sum(term1 - term2) + L2_term
-
+        
         # If you are applying this cost function to other
         # datasets where activation
         # values maybe become more extreme (closer to zero or 1)
@@ -123,7 +123,7 @@ class NeuralNetMLP(object):
         #
         # term1 = -y_enc * (np.log(output + 1e-5))
         # term2 = (1. - y_enc) * np.log(1. - output + 1e-5)
-
+        
         return cost
 
     def predict(self, X):
@@ -131,12 +131,12 @@ class NeuralNetMLP(object):
 
         Parameters
         -----------
-        X : array, shape = [n_samples, n_features]
+        X : array, shape = [n_examples, n_features]
             Input layer with original features.
 
         Returns:
         ----------
-        y_pred : array, shape = [n_samples]
+        y_pred : array, shape = [n_examples]
             Predicted class labels.
 
         """
@@ -149,13 +149,13 @@ class NeuralNetMLP(object):
 
         Parameters
         -----------
-        X_train : array, shape = [n_samples, n_features]
+        X_train : array, shape = [n_examples, n_features]
             Input layer with original features.
-        y_train : array, shape = [n_samples]
+        y_train : array, shape = [n_examples]
             Target class labels.
-        X_valid : array, shape = [n_samples, n_features]
+        X_valid : array, shape = [n_examples, n_features]
             Sample features for validation during training
-        y_valid : array, shape = [n_samples]
+        y_valid : array, shape = [n_examples]
             Sample labels for validation during training
 
         Returns:
@@ -205,30 +205,30 @@ class NeuralNetMLP(object):
                 # Backpropagation
                 ##################
 
-                # [n_samples, n_classlabels]
+                # [n_examples, n_classlabels]
                 delta_out = a_out - y_train_enc[batch_idx]
 
-                # [n_samples, n_hidden]
+                # [n_examples, n_hidden]
                 sigmoid_derivative_h = a_h * (1. - a_h)
 
-                # [n_samples, n_classlabels] dot [n_classlabels, n_hidden]
-                # -> [n_samples, n_hidden]
+                # [n_examples, n_classlabels] dot [n_classlabels, n_hidden]
+                # -> [n_examples, n_hidden]
                 delta_h = (np.dot(delta_out, self.w_out.T) *
                            sigmoid_derivative_h)
 
-                # [n_features, n_samples] dot [n_samples, n_hidden]
+                # [n_features, n_examples] dot [n_examples, n_hidden]
                 # -> [n_features, n_hidden]
                 grad_w_h = np.dot(X_train[batch_idx].T, delta_h)
                 grad_b_h = np.sum(delta_h, axis=0)
 
-                # [n_hidden, n_samples] dot [n_samples, n_classlabels]
+                # [n_hidden, n_examples] dot [n_examples, n_classlabels]
                 # -> [n_hidden, n_classlabels]
                 grad_w_out = np.dot(a_h.T, delta_out)
                 grad_b_out = np.sum(delta_out, axis=0)
 
                 # Regularization and weight updates
                 delta_w_h = (grad_w_h + self.l2*self.w_h)
-                delta_b_h = grad_b_h  # bias is not regularized
+                delta_b_h = grad_b_h # bias is not regularized
                 self.w_h -= self.eta * delta_w_h
                 self.b_h -= self.eta * delta_b_h
 
@@ -243,6 +243,7 @@ class NeuralNetMLP(object):
 
             # Evaluation after each epoch during training
             z_h, a_h, z_out, a_out = self._forward(X_train)
+            
             cost = self._compute_cost(y_enc=y_train_enc,
                                       output=a_out)
 

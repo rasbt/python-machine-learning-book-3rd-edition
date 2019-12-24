@@ -212,7 +212,7 @@ t = tf.random.uniform((5,))
 
 print(t.numpy())
 
-t_splits = tf.split(t, [3, 2])
+t_splits = tf.split(t, num_or_size_splits=[3, 2])
 
 [item.numpy() for item in t_splits]
 
@@ -348,7 +348,29 @@ for i,(batch_x, batch_y) in enumerate(ds):
 tf.random.set_seed(1)
 
 ## Order 1: shuffle -> batch -> repeat
+ds = ds_joint.shuffle(4).batch(2).repeat(3)
+
+for i,(batch_x, batch_y) in enumerate(ds):
+    print(i, batch_x.shape, batch_y.numpy())
+
+
+
+
+tf.random.set_seed(1)
+
+## Order 1: shuffle -> batch -> repeat
 ds = ds_joint.shuffle(4).batch(2).repeat(20)
+
+for i,(batch_x, batch_y) in enumerate(ds):
+    print(i, batch_x.shape, batch_y.numpy())
+
+
+
+
+tf.random.set_seed(1)
+
+## Order 2: batch -> shuffle -> repeat
+ds = ds_joint.batch(2).shuffle(4).repeat(3)
 
 for i,(batch_x, batch_y) in enumerate(ds):
     print(i, batch_x.shape, batch_y.numpy())
@@ -372,7 +394,7 @@ for i,(batch_x, batch_y) in enumerate(ds):
 
 imgdir_path = pathlib.Path('cat_dog_images')
 
-file_list = [str(path) for path in imgdir_path.glob('*.jpg')]
+file_list = sorted([str(path) for path in imgdir_path.glob('*.jpg')])
 
 print(file_list)
 
@@ -485,7 +507,7 @@ celeba_bldr.download_and_prepare()
 
 
 # Load data from disk as tf.data.Datasets
-datasets = celeba_bldr.as_dataset()
+datasets = celeba_bldr.as_dataset(shuffle_files=False)
 
 datasets.keys()
 
@@ -524,6 +546,7 @@ for i,(image,label) in enumerate(zip(images, labels)):
     ax.imshow(image)
     ax.set_title('{}'.format(label), size=15)
     
+
 plt.show()
 
 
@@ -531,7 +554,8 @@ plt.show()
 
 
 
-mnist, mnist_info = tfds.load('mnist', with_info=True)
+mnist, mnist_info = tfds.load('mnist', with_info=True,
+                              shuffle_files=False)
 
 print(mnist_info)
 
@@ -557,6 +581,8 @@ for i,(image,label) in enumerate(zip(batch[0], batch[1])):
     ax.set_xticks([]); ax.set_yticks([])
     ax.imshow(image[:, :, 0], cmap='gray_r')
     ax.set_title('{}'.format(label), size=15)
+    
+plt.show()
 
 
 

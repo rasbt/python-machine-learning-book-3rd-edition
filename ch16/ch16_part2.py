@@ -237,8 +237,7 @@ def sample(model, starting_str,
     return generated_str
 
 tf.random.set_seed(1)
-print(sample(model, starting_str='The island', 
-             scale_factor=1.0))
+print(sample(model, starting_str='The island'))
 
 
 # * **Predictability vs. randomness**

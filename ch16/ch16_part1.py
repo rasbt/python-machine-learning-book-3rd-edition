@@ -652,7 +652,7 @@ history = rnn_model.fit(
 # # Appendix
 # 
 
-# ### A -- An alterntaive way to get the dataset: using tensorflow_datasets
+# ### A -- An alternative way to get the dataset: using tensorflow_datasets
 
 
 

@@ -198,7 +198,7 @@ print('Rows: %d, columns: %d' % (X_test.shape[0], X_test.shape[1]))
 
 
 
-fig, ax = plt.subplots(nrows=2, ncols=5, sharex=True, sharey=True,)
+fig, ax = plt.subplots(nrows=2, ncols=5, sharex=True, sharey=True)
 ax = ax.flatten()
 for i in range(10):
     img = X_train[y_train == i][0].reshape(28, 28)
@@ -280,7 +280,7 @@ class NeuralNetMLP(object):
     minibatch_size : int (default: 1)
         Number of training examples per minibatch.
     seed : int (default: None)
-        Random seed for initalizing weights and shuffling.
+        Random seed for initializing weights and shuffling.
 
     Attributes
     -----------
@@ -577,8 +577,8 @@ plt.plot(range(nn.epochs), nn.eval_['valid_acc'],
          label='Validation', linestyle='--')
 plt.ylabel('Accuracy')
 plt.xlabel('Epochs')
-plt.legend()
-#plt.savefig('images/12_08.png', dpi=300)
+plt.legend(loc='lower right')
+plt.savefig('images/12_08.png', dpi=300)
 plt.show()
 
 
@@ -597,7 +597,7 @@ miscl_img = X_test[y_test != y_test_pred][:25]
 correct_lab = y_test[y_test != y_test_pred][:25]
 miscl_lab = y_test_pred[y_test != y_test_pred][:25]
 
-fig, ax = plt.subplots(nrows=5, ncols=5, sharex=True, sharey=True,)
+fig, ax = plt.subplots(nrows=5, ncols=5, sharex=True, sharey=True)
 ax = ax.flatten()
 for i in range(25):
     img = miscl_img[i].reshape(28, 28)

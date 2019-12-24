@@ -459,7 +459,6 @@ plt.show()
 
 
 
-
 test_results = model.evaluate(mnist_test.batch(20))
 print('\nTest Acc. {:.2f}%'.format(test_results[1]*100))
 

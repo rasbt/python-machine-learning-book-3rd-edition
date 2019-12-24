@@ -18,6 +18,12 @@ ch12/t10k-labels-idx1-ubyte.gz
 ch12/train-images-idx3-ubyte.gz
 ch12/train-labels-idx1-ubyte.gz
 
+# Ch18 data files
+ch08/aclImdb/
+ch08/aclImdb_v1.tar.gz
+ch08/movie_data.csv
+
+# Other 
 *checkpoint
 *tfevents*
 *.data-00000-of-00001

@@ -15,7 +15,7 @@ import itertools
 # 
 # Code License: [MIT License](https://github.com/rasbt/python-machine-learning-book-3rd-edition/blob/master/LICENSE.txt)
 
-# # Chapter 17: Generative Adversarial Networks (Part 1/2)
+# # Chapter 17 - Generative Adversarial Networks for Synthesizing New Data (Part 1/2)
 
 # Note that the optional watermark extension is a small IPython notebook plugin that I developed to make the code reproducible. You can just skip the following line(s).
 
@@ -439,7 +439,7 @@ ax.tick_params(axis='both', which='major', labelsize=15)
 ax2.tick_params(axis='both', which='major', labelsize=15)
 
 
-# plt.savefig('images/ch17-gan-learning-curve.pdf')
+#plt.savefig('images/ch17-gan-learning-curve.pdf')
 plt.show()
 
 

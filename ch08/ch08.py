@@ -44,7 +44,15 @@ from sklearn.decomposition import LatentDirichletAllocation
 
 
 
-# *The use of `watermark` is optional. You can install this IPython extension via "`pip install watermark`". For more information, please see: https://github.com/rasbt/watermark.*
+# *The use of `watermark` is optional. You can install this Jupyter extension via*  
+# 
+#     conda install watermark -c conda-forge  
+# 
+# or  
+# 
+#     pip install watermark   
+# 
+# *For more information, please see: https://github.com/rasbt/watermark.*
 
 
 # ### Overview
@@ -271,13 +279,13 @@ print(tfidf.fit_transform(count.fit_transform(docs))
 # To make sure that we understand how TfidfTransformer works, let us walk
 # through an example and calculate the tf-idf of the word is in the 3rd document.
 # 
-# The word is has a term frequency of 3 (tf = 3) in document 3, and the document frequency of this term is 3 since the term is occurs in all three documents (df = 3). Thus, we can calculate the idf as follows:
+# The word is has a term frequency of 3 (tf = 3) in document 3 ($d_3$), and the document frequency of this term is 3 since the term is occurs in all three documents (df = 3). Thus, we can calculate the idf as follows:
 # 
-# $$\text{idf}("is", d3) = log \frac{1+3}{1+3} = 0$$
+# $$\text{idf}("is", d_3) = log \frac{1+3}{1+3} = 0$$
 # 
 # Now in order to calculate the tf-idf, we simply need to add 1 to the inverse document frequency and multiply it by the term frequency:
 # 
-# $$\text{tf-idf}("is",d3)= 3 \times (0+1) = 3$$
+# $$\text{tf-idf}("is", d_3)= 3 \times (0+1) = 3$$
 
 
 
@@ -420,7 +428,7 @@ param_grid = [{'vect__ngram_range': [(1, 1)],
               ]
 
 lr_tfidf = Pipeline([('vect', tfidf),
-                     ('clf', LogisticRegression(random_state=0))])
+                     ('clf', LogisticRegression(random_state=0, solver='liblinear'))])
 
 gs_lr_tfidf = GridSearchCV(lr_tfidf, param_grid,
                            scoring='accuracy',
@@ -435,7 +443,7 @@ gs_lr_tfidf = GridSearchCV(lr_tfidf, param_grid,
 
 # **Important Note about the running time**
 # 
-# Executing the following code cell **may take up to 30-60 min** depending on your machine, since based on the parameter grid we defined, there are 2*2*2*3*5 + 2*2*2*3*5 = 240 models to fit.
+# Executing the following code cell **may take up to 30-60 min** depending on your machine, since based on the parameter grid we defined, there are `2*2*2*3*5` + `2*2*2*3*5` = 240 models to fit.
 # 
 # If you do not wish to wait so long, you could reduce the size of the dataset by decreasing the number of training examples, for example, as follows:
 # 
@@ -450,25 +458,6 @@ gs_lr_tfidf = GridSearchCV(lr_tfidf, param_grid,
 #                    'clf__penalty': ['l1', 'l2'],
 #                    'clf__C': [1.0, 10.0]},
 #                   ]
-
-
-
-## @Readers: PLEASE IGNORE THIS CELL
-##
-## This cell is meant to generate more 
-## "logging" output when this notebook is run 
-## on the Travis Continuous Integration
-## platform to test the code as well as
-## speeding up the run using a smaller
-## dataset for debugging
-
-if 'TRAVIS' in os.environ:
-    gs_lr_tfidf.verbose=2
-    X_train = df.loc[:250, 'review'].values
-    y_train = df.loc[:250, 'sentiment'].values
-    X_test = df.loc[25000:25250, 'review'].values
-    y_test = df.loc[25000:25250, 'sentiment'].values
-
 
 
 
@@ -665,22 +654,6 @@ clf = clf.partial_fit(X_test, y_test)
 
 df = pd.read_csv('movie_data.csv', encoding='utf-8')
 df.head(3)
-
-
-
-
-## @Readers: PLEASE IGNORE THIS CELL
-##
-## This cell is meant to create a smaller dataset if
-## the notebook is run on the Travis Continuous Integration
-## platform to test the code on a smaller dataset
-## to prevent timeout errors and just serves a debugging tool
-## for this notebook
-
-if 'TRAVIS' in os.environ:
-    df.loc[:500].to_csv('movie_data.csv')
-    df = pd.read_csv('movie_data.csv', nrows=500)
-    print('SMALL DATA SUBSET CREATED FOR TESTING')
 
 
 

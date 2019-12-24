@@ -66,11 +66,11 @@ Throughout this book, we will mainly use NumPy's multi-dimensional arrays to sto
 
 The version numbers of the major Python packages that were used for writing this book are listed below. Please make sure that the version numbers of your installed packages are equal to, or greater than, those version numbers to ensure the code examples run correctly:
 
-- [NumPy](http://www.numpy.org) >= 1.16.4
-- [SciPy](http://www.scipy.org) >= 1.2.1
-- [scikit-learn](http://scikit-learn.org/stable/) >= 0.21.1
+- [NumPy](http://www.numpy.org) >= 1.17.4
+- [SciPy](http://www.scipy.org) >= 1.3.1
+- [scikit-learn](http://scikit-learn.org/stable/) >= 0.22.0
 - [matplotlib](http://matplotlib.org) >= 3.1.0
-- [pandas](http://pandas.pydata.org) >= 0.24.2
+- [pandas](http://pandas.pydata.org) >= 0.25.3
 
 ## Python/Jupyter Notebook
 
