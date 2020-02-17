@@ -12,6 +12,10 @@
 
 > So, let's choose two different learning rates, eta = 0.1 and eta = 0.0001, to start with and plot the cost functions versus the number of epochs to see how well the Adaline implementation learns from the training data.
 
+## Chapter 3
+
+- pg 56: The comment about the `n_iter` method can be ignored as it does not apply to recent scikit-learn versions (0.21 and newer)
+
 ## Chapter 5
 
 - pg. 162. In `S_i = \sum_{x in D_i} (x - m_i) (x - m_i)^{\top}`, the transpose should be on the first row vector, i.e., `S_i = \sum_{x in D_i} (x - m_i)^{\top} (x - m_i)`.
