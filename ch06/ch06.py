@@ -21,7 +21,7 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score, f1_score
 from sklearn.metrics import make_scorer
 from sklearn.metrics import roc_curve, auc
-from scipy import interp
+from numpy import interp
 from sklearn.utils import resample
 
 # *Python Machine Learning 3rd Edition* by [Sebastian Raschka](https://sebastianraschka.com), Packt Publishing Ltd. 2019
