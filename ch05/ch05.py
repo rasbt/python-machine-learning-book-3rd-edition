@@ -11,7 +11,7 @@ from matplotlib.colors import ListedColormap
 from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from scipy.spatial.distance import pdist, squareform
-from scipy import exp
+from numpy import exp
 from scipy.linalg import eigh
 from sklearn.datasets import make_moons
 from sklearn.datasets import make_circles
