@@ -12,6 +12,8 @@
 
 > So, let's choose two different learning rates, eta = 0.1 and eta = 0.0001, to start with and plot the cost functions versus the number of epochs to see how well the Adaline implementation learns from the training data.
 
+- pg. 45: Arrows should be perpendicular to the contour lines.
+
 ## Chapter 3
 
 - pg 56: The comment about the `n_iter` method can be ignored as it does not apply to recent scikit-learn versions (0.21 and newer)
@@ -23,3 +25,9 @@
 ## Chapter 13
 
 - pg. 469: Instead of `tf.keras.activations.tanh(z)` it should be `tf.keras.activations.relu(z)`.
+
+## Chapter 15
+
+- pg. 524: "valid" and "same" are swapped in the figure here. You can use the 2D version of this figure from the 2nd edition as reference, where this is correct:
+
+![](images/524-old.png)
