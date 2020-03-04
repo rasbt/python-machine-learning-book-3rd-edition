@@ -11,8 +11,11 @@ from matplotlib.colors import ListedColormap
 from sklearn.linear_model import LogisticRegression
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
 from scipy.spatial.distance import pdist, squareform
-from scipy import exp
 from scipy.linalg import eigh
+from distutils.version import LooseVersion as Version
+from scipy import __version__ as scipy_version
+    from numpy import exp
+    from scipy import exp
 from sklearn.datasets import make_moons
 from sklearn.datasets import make_circles
 from sklearn.decomposition import KernelPCA
@@ -595,6 +598,15 @@ plt.show()
 
 
 
+
+
+
+if scipy_version >= Version('1.4.1'):
+else:
+
+
+
+
 def rbf_kernel_pca(X, gamma, n_components):
     """
     RBF kernel PCA implementation.
@@ -920,11 +932,6 @@ plt.show()
 # ---
 # 
 # Readers may ignore the next cell.
-
-
-
-
-
 
 
 

@@ -21,7 +21,10 @@ from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score, f1_score
 from sklearn.metrics import make_scorer
 from sklearn.metrics import roc_curve, auc
-from scipy import interp
+from distutils.version import LooseVersion as Version
+from scipy import __version__ as scipy_version
+    from numpy import interp
+    from scipy import interp
 from sklearn.utils import resample
 
 # *Python Machine Learning 3rd Edition* by [Sebastian Raschka](https://sebastianraschka.com), Packt Publishing Ltd. 2019
@@ -490,6 +493,11 @@ print(gs.best_params_)
 # ## Plotting a receiver operating characteristic
 
 
+
+
+
+if scipy_version >= Version('1.4.1'):
+else:
 
 
 pipe_lr = make_pipeline(StandardScaler(),
