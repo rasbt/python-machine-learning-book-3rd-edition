@@ -308,6 +308,8 @@ class NeuralNetMLP(object):
         ------------
         y : array, shape = [n_examples]
             Target values.
+        n_classes : int
+            Number of classes
 
         Returns
         -----------
