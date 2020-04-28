@@ -121,8 +121,6 @@ def conv2d(X, W, p=(0, 0), s=(1, 1)):
     n1 = X_orig.shape[0] + 2*p[0]
     n2 = X_orig.shape[1] + 2*p[1]
     X_padded = np.zeros(shape=(n1, n2))
-    X_padded[p[0]:p[0]+X_orig.shape[0],
-    p[1]:p[1]+X_orig.shape[1]] = X_orig
 
     res = []
     for i in range(0, int((X_padded.shape[0] - 
