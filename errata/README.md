@@ -34,6 +34,8 @@
 
 ![](images/524-old.png)
 
+- pg. 526, to be more consistent with the text and cover a more general scenario (where padding is not `'same'`), the line `for i in range(0, int(len(x)/s), s):` in the `conv1d` function could be changed to  `for i in range(0, int((len(x_padded) - len(w_rot)) / s) + 1, s):`
+
 ## Chapter 18
 
 - pg. 713: Not a code error, but the line `self.enf = env` could be changed to `self.env = env` to look more consistent
