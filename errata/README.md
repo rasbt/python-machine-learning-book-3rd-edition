@@ -33,3 +33,7 @@
 - pg. 524: "valid" and "same" are swapped in the figure here. You can use the 2D version of this figure from the 2nd edition as reference, where this is correct:
 
 ![](images/524-old.png)
+
+## Chapter 18
+
+- pg. 713: Not a code error, but the line `self.enf = env` could be changed to `self.env = env` to look more consistent
