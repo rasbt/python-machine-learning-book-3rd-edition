@@ -38,4 +38,5 @@
 
 ## Chapter 18
 
+- pg. 682: in "Episode 2", there are some wrong index values for G. The subscript of G should match the value of t. E.g., where t=1, it should be G1, not G0.
 - pg. 713: Not a code error, but the line `self.enf = env` could be changed to `self.env = env` to look more consistent
