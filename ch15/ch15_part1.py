@@ -273,9 +273,9 @@ probas = tf.keras.activations.softmax(logits)
 
 tf.print(
     'CCE (w Probas): {:.4f}'.format(
-    cce_probas(y_true=[0, 0, 1], y_pred=probas)),
+    cce_probas(y_true=[[0, 0, 1]], y_pred=probas)),
     '(w Logits): {:.4f}'.format(
-    cce_logits(y_true=[0, 0, 1], y_pred=logits)))
+    cce_logits(y_true=[[0, 0, 1]], y_pred=logits)))
 
 ####### Sparse Categorical Crossentropy
 sp_cce_probas = tf.keras.losses.SparseCategoricalCrossentropy(
