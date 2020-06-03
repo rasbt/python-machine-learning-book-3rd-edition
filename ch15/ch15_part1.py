@@ -428,7 +428,7 @@ model.summary()
 
 model.compile(optimizer=tf.keras.optimizers.Adam(),
               loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-              metrics=['accuracy']) # same as `tf.keras.metrics.SparseCategoricalAccuracy(name='accuracy')`
+              metrics=['accuracy'])
 
 history = model.fit(mnist_train, epochs=NUM_EPOCHS, 
                     validation_data=mnist_valid, 
