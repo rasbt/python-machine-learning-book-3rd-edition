@@ -179,7 +179,7 @@ class NeuralNetMLP(object):
 
         # weights for hidden -> output
         self.b_out = np.zeros(n_output)
-        self.w_out = self.random.normal(loc=0.0, scale=0.1,
+        self.w_out = np.random.normal(loc=0.0, scale=0.1,
                                         size=(self.n_hidden, n_output))
 
         epoch_strlen = len(str(self.epochs))  # for progress formatting
@@ -194,7 +194,7 @@ class NeuralNetMLP(object):
             indices = np.arange(X_train.shape[0])
 
             if self.shuffle:
-                self.random.shuffle(indices)
+                np.random.shuffle(indices)
 
             for start_idx in range(0, indices.shape[0] - self.minibatch_size +
                                    1, self.minibatch_size):
