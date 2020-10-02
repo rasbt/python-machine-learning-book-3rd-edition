@@ -16,6 +16,8 @@
 
 ## Chapter 3
 
+- pg. 55 & 56: Says `print('Labels counts ...` in code, but "labels counts" is grammatically wrong and should be "label counts."
+
 - pg. 56: The comment about the `n_iter` method can be ignored as it does not apply to recent scikit-learn versions (0.21 and newer)
 
 - pg. 84: It says "XOR gate using the `logical_or` function from NumPy, " near the bottom, but it should be `logical_xor` instead of `logical_or`

@@ -103,9 +103,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 
 
-print('Labels counts in y:', np.bincount(y))
-print('Labels counts in y_train:', np.bincount(y_train))
-print('Labels counts in y_test:', np.bincount(y_test))
+print('Label counts in y:', np.bincount(y))
+print('Label counts in y_train:', np.bincount(y_train))
+print('Label counts in y_test:', np.bincount(y_test))
 
 
 # Standardizing the features:
