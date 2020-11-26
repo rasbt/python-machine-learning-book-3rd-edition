@@ -10,6 +10,7 @@ import tensorflow_datasets as tfds
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+from distutils.version import LooseVersion as Version
 
 # *Python Machine Learning 3rd Edition* by [Sebastian Raschka](https://sebastianraschka.com) & [Vahid Mirjalili](http://vahidmirjalili.com), Packt Publishing Ltd. 2019
 # 
@@ -271,11 +272,19 @@ cce_logits = tf.keras.losses.CategoricalCrossentropy(
 logits = tf.constant([[1.5, 0.8, 2.1]])
 probas = tf.keras.activations.softmax(logits)
 
-tf.print(
-    'CCE (w Probas): {:.4f}'.format(
-    cce_probas(y_true=[0, 0, 1], y_pred=probas)),
-    '(w Logits): {:.4f}'.format(
-    cce_logits(y_true=[0, 0, 1], y_pred=logits)))
+if Version(tf.__version__) >= '2.3.0':
+    tf.print(
+        'CCE (w Probas): {:.4f}'.format(
+        cce_probas(y_true=[[0, 0, 1]], y_pred=probas)),
+        '(w Logits): {:.4f}'.format(
+        cce_logits(y_true=[[0, 0, 1]], y_pred=logits)))
+    
+else:
+    tf.print(
+        'CCE (w Probas): {:.4f}'.format(
+        cce_probas(y_true=[0, 0, 1], y_pred=probas)),
+        '(w Logits): {:.4f}'.format(
+        cce_logits(y_true=[0, 0, 1], y_pred=logits)))
 
 ####### Sparse Categorical Crossentropy
 sp_cce_probas = tf.keras.losses.SparseCategoricalCrossentropy(
