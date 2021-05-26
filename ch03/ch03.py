@@ -9,6 +9,8 @@ from sklearn.linear_model import Perceptron
 from sklearn.metrics import accuracy_score
 from matplotlib.colors import ListedColormap
 import matplotlib.pyplot as plt
+import matplotlib
+from distutils.version import LooseVersion
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.linear_model import SGDClassifier
@@ -103,9 +105,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 
 
-print('Label counts in y:', np.bincount(y))
-print('Label counts in y_train:', np.bincount(y_train))
-print('Label counts in y_test:', np.bincount(y_test))
+print('Labels count in y:', np.bincount(y))
+print('Labels count in y_train:', np.bincount(y_train))
+print('Labels count in y_test:', np.bincount(y_test))
 
 
 # Standardizing the features:
@@ -153,6 +155,8 @@ print('Accuracy: %.3f' % ppn.score(X_test_std, y_test))
 
 
 
+# To check recent matplotlib compatibility
+
 
 def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
 
@@ -176,7 +180,7 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
         plt.scatter(x=X[y == cl, 0], 
                     y=X[y == cl, 1],
                     alpha=0.8, 
-                    c=colors[idx],
+                    color=colors[idx],
                     marker=markers[idx], 
                     label=cl, 
                     edgecolor='black')
@@ -186,15 +190,27 @@ def plot_decision_regions(X, y, classifier, test_idx=None, resolution=0.02):
         # plot all examples
         X_test, y_test = X[test_idx, :], y[test_idx]
 
-        plt.scatter(X_test[:, 0],
-                    X_test[:, 1],
-                    c='',
-                    edgecolor='black',
-                    alpha=1.0,
-                    linewidth=1,
-                    marker='o',
-                    s=100, 
-                    label='test set')
+        
+        if LooseVersion(matplotlib.__version__) < LooseVersion('0.3.4'):
+            plt.scatter(X_test[:, 0],
+                        X_test[:, 1],
+                        c='',
+                        edgecolor='black',
+                        alpha=1.0,
+                        linewidth=1,
+                        marker='o',
+                        s=100, 
+                        label='test set')
+        else:
+            plt.scatter(X_test[:, 0],
+                        X_test[:, 1],
+                        c='none',
+                        edgecolor='black',
+                        alpha=1.0,
+                        linewidth=1,
+                        marker='o',
+                        s=100, 
+                        label='test set')        
 
 
 # Training a perceptron model using the standardized training data:
@@ -750,6 +766,11 @@ plt.show()
 # ---
 # 
 # Readers may ignore the next cell.
+
+
+
+
+
 
 
 
