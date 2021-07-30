@@ -168,8 +168,7 @@ np.arccos(v1.dot(v2) / (np.linalg.norm(v1) * np.linalg.norm(v2)))
 
 
 
-s = os.path.join('https://archive.ics.uci.edu', 'ml',
-                 'machine-learning-databases', 'iris','iris.data')
+s = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
 print('URL:', s)
 
 df = pd.read_csv(s,

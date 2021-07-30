@@ -213,7 +213,10 @@ ds_raw_valid = ds_raw_train_valid.skip(20000)
 ## Step 2: find unique words
 
 
-tokenizer = tfds.features.text.Tokenizer()
+try:
+    tokenizer = tfds.features.text.Tokenizer()
+except AttributeError:
+    tokenizer = tfds.deprecated.text.Tokenizer()
 token_counts = Counter()
 
 for example in ds_raw_train:
@@ -227,7 +230,10 @@ print('Vocab-size:', len(token_counts))
 
 ## Step 3: endoding each unique token into integers
 
-encoder = tfds.features.text.TokenTextEncoder(token_counts)
+try:
+    encoder = tfds.features.text.TokenTextEncoder(token_counts)
+except AttributeError:
+    encoder = tfds.deprecated.text.TokenTextEncoder(token_counts)
 
 example_str = 'This is an example!'
 encoder.encode(example_str)
