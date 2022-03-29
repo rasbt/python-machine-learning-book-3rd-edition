@@ -7,6 +7,8 @@ from mlxtend.plotting import scatterplotmatrix
 import numpy as np
 from mlxtend.plotting import heatmap
 from sklearn.preprocessing import StandardScaler
+from distutils.version import LooseVersion
+import sklearn
 from sklearn.linear_model import LinearRegression
 from sklearn.linear_model import RANSACRegressor
 from sklearn.model_selection import train_test_split
@@ -181,6 +183,10 @@ plt.show()
 
 
 
+
+
+
+
 class LinearRegressionGD(object):
 
     def __init__(self, eta=0.001, n_iter=20):
@@ -265,9 +271,15 @@ print('Intercept: %.3f' % lr.w_[0])
 
 
 
+
+
 num_rooms_std = sc_x.transform(np.array([[5.0]]))
 price_std = lr.predict(num_rooms_std)
-print("Price in $1000s: %.3f" % sc_y.inverse_transform(price_std))
+
+if LooseVersion(sklearn.__version__) >= LooseVersion('0.23.0'):
+    print("Price in $1000s: %.3f" % sc_y.inverse_transform(price_std[:, np.newaxis]).flatten())
+else:
+    print("Price in $1000s: %.3f" % sc_y.inverse_transform(price_std))
 
 
 
@@ -721,6 +733,61 @@ plt.show()
 # ---
 # 
 # Readers may ignore the next cell.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
