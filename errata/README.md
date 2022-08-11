@@ -26,6 +26,17 @@
 
 - pg. 162. In `S_i = \sum_{x in D_i} (x - m_i) (x - m_i)^{\top}`, the transpose should be on the first row vector, i.e., `S_i = \sum_{x in D_i} (x - m_i)^{\top} (x - m_i)`.
 
+
+
+## Chapter 8
+
+- In tokenizer, change `text.lower()` to `text`, i.e.,
+
+```python
+emoticons = re.findall('(?::|;|=)(?:-)?(?:\)|\(|D|P)', text)
+```
+to catch emoticons such as ":-P"
+
 ## Chapter 13
 
 - pg. 469: Instead of `tf.keras.activations.tanh(z)` it should be `tf.keras.activations.relu(z)`.
