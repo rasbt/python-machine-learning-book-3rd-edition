@@ -128,13 +128,6 @@ df.dropna(axis=1)
 
 
 
-# remove columns that contain missing values
-
-df.dropna(axis=1)
-
-
-
-
 # only drop rows where all columns are NaN
 
 df.dropna(how='all')  
