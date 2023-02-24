@@ -14,4 +14,4 @@ jobs :
         run  : pip install pytest numpy pandas
         
       - name : Run Test
-        run  : pytest test_preprocessig.py 
+        run  : pytest test_preprocessing.py 
