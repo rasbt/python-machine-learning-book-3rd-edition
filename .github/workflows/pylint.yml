@@ -22,3 +22,5 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint $(git ls-files '*.py')
+      working-directory: additional_features
+
