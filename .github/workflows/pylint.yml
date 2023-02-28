@@ -1,7 +1,8 @@
-name: Pylint
-
-on: [push]
-
+name: My Workflow
+on:
+  push:
+    branches:
+      - i191855_branch_feat_addition
 jobs:
   build:
     runs-on: ubuntu-latest
